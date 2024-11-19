@@ -55,7 +55,7 @@ public class ScoreLoader : MonoBehaviour
             m_measureCount++;
             m_measureText.text = $"Measure {m_measureCount}";
         }
-        m_beatText.text = $"Beat {m_beatCount}";
+        m_beatText.text = $"Beat {m_beatCount+1}";
     }
 
     public void OnKeysReady()
@@ -135,11 +135,44 @@ public class ScoreLoader : MonoBehaviour
         {
             m_notesPlayed.text = "Notes Played" + Environment.NewLine;
 
+            List<PianoKey> l_playedKeys = new();
+
             foreach (string note in m_allNotes[m_16thCount])
             {
                 m_notesPlayed.text += note + " ";
 
-                m_piano.RequestKey(note, 1f);
+                PianoKey l_playedKey = m_piano.RequestKey(note, 1f);
+
+                if (l_playedKey != null) l_playedKeys.Add(l_playedKey);
+
+                bool l_needsTwoHands = false;
+                PianoKey l_begSpanKey = l_playedKeys[0];
+                List<Vector3> l_leftKeys, l_rightKeys;
+                GetHandKeys(l_playedKeys, ref l_begSpanKey, ref l_needsTwoHands, out l_leftKeys, out l_rightKeys);
+
+                Vector3 l_leftHandPos = Vector3.zero, l_rightHandPos = Vector3.zero;
+                foreach (Vector3 l_leftHandKey in l_leftKeys) l_leftHandPos += l_leftHandKey;
+                foreach (Vector3 l_rightHandKey in l_leftKeys) l_rightHandPos += l_rightHandKey;
+
+                if (l_leftKeys.Count > 0)
+                {
+                    for (int l_idxFinger = 0; l_idxFinger < m_leftHandFingerTargets.Count
+                        && l_idxFinger < l_leftKeys.Count; l_idxFinger++)
+                    {
+                        m_leftHandFingerTargets[l_idxFinger].SetDestination(l_leftKeys[l_idxFinger] + m_handsFingersOffsetPosition);
+                        m_leftHandFingerTargets[l_idxFinger].transform.rotation = Quaternion.Euler(m_handsFingersOffsetRotationLeft);
+                    }
+                }
+
+                if (l_rightKeys.Count > 0)
+                {
+                    for (int l_idxFinger = 0; l_idxFinger < m_rightHandFingerTargets.Count
+                        && l_idxFinger < l_rightKeys.Count; l_idxFinger++)
+                    {
+                        m_rightHandFingerTargets[l_idxFinger].SetDestination(l_rightKeys[l_idxFinger] + m_handsFingersOffsetPosition);
+                        m_rightHandFingerTargets[l_idxFinger].transform.rotation = Quaternion.Euler(m_handsFingersOffsetRotationRight);
+                    }
+                }
             }
         }
         if(m_allNotes.ContainsKey(m_16thCount+1) && m_allNotes[m_16thCount+1] != null)
@@ -176,30 +209,8 @@ public class ScoreLoader : MonoBehaviour
             PianoKey l_begSpanKey = p_playedKeys[0];
 
             bool l_needsTwoHands = false;
-            List<Vector3> l_leftKeys = new();
-            List<Vector3> l_rightKeys = new();
-
-            for (int l_idxKey = 0; l_idxKey < p_playedKeys.Count; l_idxKey++)
-            {
-                PianoKey l_validPlayedKey = p_playedKeys[l_idxKey];
-
-                if (Vector3.Distance(l_validPlayedKey.transform.position, l_begSpanKey.transform.position) < m_maxHandSpan)
-                {
-                    if (l_needsTwoHands)
-                    {
-                        l_rightKeys.Add(l_validPlayedKey.transform.position);
-                    }
-                    else
-                    {
-                        l_leftKeys.Add(l_validPlayedKey.transform.position);
-                    }
-                }
-                else
-                {
-                    l_needsTwoHands = true;
-                    l_begSpanKey = l_validPlayedKey;
-                }
-            }
+            List<Vector3> l_leftKeys, l_rightKeys;
+            GetHandKeys(p_playedKeys, ref l_begSpanKey, ref l_needsTwoHands, out l_leftKeys, out l_rightKeys);
 
             Vector3 l_leftHandPos = Vector3.zero, l_rightHandPos = Vector3.zero;
             foreach (Vector3 l_leftHandKey in l_leftKeys) l_leftHandPos += l_leftHandKey;
@@ -207,28 +218,54 @@ public class ScoreLoader : MonoBehaviour
 
             if (l_leftKeys.Count > 0)
             {
-                m_leftHandTarget.SetDestination(l_leftHandPos / l_leftKeys.Count + m_handsOffsetPosition);
+                Vector3 l_dest = l_leftHandPos / l_leftKeys.Count + m_handsOffsetPosition;
+                m_leftHandTarget.SetDestination(l_dest);
                 m_leftHandTarget.transform.rotation = Quaternion.Euler(m_handsOffsetRotationLeft);
 
-                for(int l_idxFinger = 0; l_idxFinger < m_leftHandFingerTargets.Count 
-                    && l_idxFinger < l_leftKeys.Count; l_idxFinger++)
+                foreach(Lerper l_finger in m_leftHandFingerTargets)
                 {
-                    m_leftHandFingerTargets[l_idxFinger].SetDestination(l_leftKeys[l_idxFinger] + m_handsFingersOffsetPosition);
-                    m_leftHandFingerTargets[l_idxFinger].transform.rotation = Quaternion.Euler(m_handsFingersOffsetRotationLeft);
+                    l_finger.SetDestination(l_dest);
                 }
             }
 
             if (l_rightKeys.Count > 0)
             {
-                m_rightHandTarget.SetDestination(l_rightHandPos / l_rightKeys.Count + m_handsOffsetPosition);
+                Vector3 l_dest = l_rightHandPos / l_rightKeys.Count + m_handsOffsetPosition;
+                m_rightHandTarget.SetDestination(l_dest);
                 m_rightHandTarget.transform.rotation = Quaternion.Euler(m_handsOffsetRotationRight);
 
-                for (int l_idxFinger = 0; l_idxFinger < m_rightHandFingerTargets.Count 
-                    && l_idxFinger < l_rightKeys.Count; l_idxFinger++)
+                foreach (Lerper l_finger in m_rightHandFingerTargets)
                 {
-                    m_rightHandFingerTargets[l_idxFinger].SetDestination(l_rightKeys[l_idxFinger] + m_handsFingersOffsetPosition);
-                    m_rightHandFingerTargets[l_idxFinger].transform.rotation = Quaternion.Euler(m_handsFingersOffsetRotationRight);
+                    l_finger.SetDestination(l_dest);
                 }
+            }
+        }
+    }
+
+    private void GetHandKeys(List<PianoKey> p_playedKeys, ref PianoKey l_begSpanKey, ref bool l_needsTwoHands, out List<Vector3> l_leftKeys, out List<Vector3> l_rightKeys)
+    {
+        l_leftKeys = new();
+        l_rightKeys = new();
+        p_playedKeys.Sort();
+        for (int l_idxKey = 0; l_idxKey < p_playedKeys.Count; l_idxKey++)
+        {
+            PianoKey l_validPlayedKey = p_playedKeys[l_idxKey];
+
+            if (Vector3.Distance(l_validPlayedKey.transform.position, l_begSpanKey.transform.position) < m_maxHandSpan)
+            {
+                if (l_needsTwoHands)
+                {
+                    l_rightKeys.Add(l_validPlayedKey.transform.position);
+                }
+                else
+                {
+                    l_leftKeys.Add(l_validPlayedKey.transform.position);
+                }
+            }
+            else
+            {
+                l_needsTwoHands = true;
+                l_begSpanKey = l_validPlayedKey;
             }
         }
     }

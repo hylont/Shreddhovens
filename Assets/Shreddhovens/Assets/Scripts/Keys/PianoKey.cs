@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class PianoKey : MonoBehaviour
+public class PianoKey : MonoBehaviour, IComparable<PianoKey>
 {
     [SerializeField] float m_defaultVolume = .6f;
     float m_duration;
@@ -43,5 +44,10 @@ public class PianoKey : MonoBehaviour
         yield return new WaitForSeconds(m_duration);
         GetComponent<AudioSource>().Stop();
         GetComponent<Animator>().SetBool("IsPressed", false);
+    }
+
+    public int CompareTo(PianoKey other)
+    {
+        return other.name.CompareTo(other.name);
     }
 }
