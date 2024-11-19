@@ -13,7 +13,7 @@ public class PianoBuilder : MonoBehaviour
     [SerializeField] float m_blackYOffset = .005f;
     [SerializeField] Transform m_keyOrigin;
 
-    Dictionary<string, PianoKey> m_allKeys = new();
+    public Dictionary<string, PianoKey> m_allKeys { get; private set; } = new();
     // Start is called before the first frame update
     void Start()
     {
@@ -143,11 +143,15 @@ public class PianoBuilder : MonoBehaviour
         return l_searchedKey;
     }
 
-    public void RequestKey(string key, float duration = 1f)
+    public PianoKey RequestKey(string key, float duration = 1f)
     {
         if (m_allKeys.ContainsKey(key))
         {
             m_allKeys[key].Play(duration);
+            return m_allKeys[key];
         }
+
+        Debug.LogError("[BUILDER] Key " + key + " doesn't exist");
+        return null;
     }
 }
