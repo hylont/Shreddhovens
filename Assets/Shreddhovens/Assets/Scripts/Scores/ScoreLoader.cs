@@ -35,6 +35,12 @@ public class ScoreLoader : MonoBehaviour
     [SerializeField] Vector3 m_handsFingersOffsetRotationLeft = new(0, 0, 0);
     [SerializeField] Vector3 m_handsFingersOffsetRotationRight = new(0, 0, 0);
 
+    [Header("Lights")]
+    [SerializeField] List<ProjectorGroup> m_groups = new();
+    [SerializeField] [Range(0, 5)] int m_nbGroupsActivatedSimultaneously = 2; //ignored from now
+    [SerializeField] [Range(0f, 1f)] float m_groupDeactivationChancesAtMeasure = .2f;
+    List<ProjectorGroup> m_activatedGroups = new();
+
     Dictionary<int, List<string>> m_allNotes = new();
 
     private void Start()
@@ -53,8 +59,23 @@ public class ScoreLoader : MonoBehaviour
             if(m_playMetronome) m_measureSource.Play();
             m_measureCount++;
             m_measureText.text = $"Measure {m_measureCount}";
+
+            //activate groups randomly
+            foreach (ProjectorGroup l_group in m_groups)
+            {
+                l_group.enabled = UnityEngine.Random.Range(0f, 1f) < m_groupDeactivationChancesAtMeasure;
+            }
+
+            //foreach (ProjectorGroup l_group in m_groups)
+            //{
+            //    if (l_group.enabled == false && m_activatedGroups.Contains(l_group))
+            //        m_activatedGroups.Remove(l_group);
+            //}
+
+            //int l_nbgroupsToActivate = UnityEngine.Random.Range(0, m_nbGroupsActivatedSimultaneously);
+
         }
-        m_beatText.text = $"Beat {m_beatCount+1}";
+        m_beatText.text = $"Beat {m_beatCount+1}";        
     }
 
     public void OnKeysReady()
@@ -126,6 +147,14 @@ public class ScoreLoader : MonoBehaviour
         }
 
         InvokeRepeating(nameof(Count16th), 0f, 60f / (m_bpm * m_timeSignature));
+
+        foreach (ProjectorGroup l_group in m_groups)
+        {
+            l_group.ActivationDelay = 60f / m_bpm;
+            l_group.DestChangeSpeed = 60f / (m_bpm * (m_timeSignature / 2));
+            l_group.TargetChangeSpeed = 60f / (m_bpm * (m_timeSignature / 2));
+            l_group.FlashInterval = 60f / (m_bpm * m_timeSignature);
+        }
     }
 
     void Count16th()
@@ -181,9 +210,15 @@ public class ScoreLoader : MonoBehaviour
 
             foreach (string note in m_allNotes[m_16thCount+1])
             {
-                PianoKey l_playedKey = m_piano.m_allKeys[note];
+                try
+                {
+                    PianoKey l_playedKey = m_piano.m_allKeys[note];
 
-                if (l_playedKey != null) l_playedKeys.Add(l_playedKey);
+                    if (l_playedKey != null) l_playedKeys.Add(l_playedKey);
+                }catch (Exception _)
+                {
+
+                }
             }
             
             StartCoroutine(PrepareHandsToNextPositions(l_playedKeys));

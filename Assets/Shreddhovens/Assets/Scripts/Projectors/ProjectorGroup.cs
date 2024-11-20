@@ -1,16 +1,65 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ProjectorGroup : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    AnimatedProjector[] m_projectors = null;
+    [SerializeField] int m_projectorsToActivateAtEachStart = 1;
+
+    public float ActivationDelay = 0, TargetChangeSpeed = 0, DestChangeSpeed = 0, FlashInterval = .1f;
+
+    void Awake()
     {
-        
+        m_projectors = GetComponentsInChildren<AnimatedProjector>();
+
+        if (m_projectors == null) Debug.LogError("[PROJECTOR GROUP] No child projectors found !");
     }
 
-    // Update is called once per frame
-    void Update()
+    void StartAnimations()
     {
-        
+        int l_stepsUntilDelay = m_projectorsToActivateAtEachStart;
+        int l_projectorSetCounter = 0;
+        for (int l_idxProjector = 0; l_idxProjector < m_projectors.Length; l_idxProjector++)
+        {
+            AnimatedProjector l_projector = m_projectors[l_idxProjector];
+            l_projector.TimeUntilBegin = l_projectorSetCounter * ActivationDelay;
+
+            l_projector.FlashInterval = FlashInterval;
+
+            l_projector.StartAnimation(TargetChangeSpeed, DestChangeSpeed);
+
+            l_stepsUntilDelay--;
+            if(l_stepsUntilDelay == 0)
+            {
+                l_stepsUntilDelay = m_projectorsToActivateAtEachStart;
+                l_projectorSetCounter++;
+            }
+        }
+    }
+
+    public void Init(float p_activationDelay, float p_targetChangeSpeed, float p_destChangeSpeed)
+    {
+        ActivationDelay = p_activationDelay;
+        TargetChangeSpeed = p_targetChangeSpeed;
+        DestChangeSpeed = p_destChangeSpeed;
+    }
+
+    public void Init(float p_beatDelay)
+    {
+        Init(p_beatDelay, p_beatDelay, p_beatDelay);
+    }
+
+    private void OnEnable()
+    {
+        StartAnimations();
+    }
+
+    private void OnDisable()
+    {
+        foreach(AnimatedProjector l_projector in m_projectors)
+        {
+            l_projector.StopAnimation();
+        }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,7 @@ public enum EAnimation
 
 public class AnimatedProjector : MonoBehaviour
 {
-    [SerializeField] Light m_light;
+    [SerializeField] Light m_lightSpot, m_lightArea;
     public List<EAnimation> Animations;
 
     public float TimeUntilBegin = 0f;
@@ -20,6 +21,7 @@ public class AnimatedProjector : MonoBehaviour
     public float RotationSpeed = 1f, MovementSpeed = 1f;
 
     [SerializeField] bool m_canAnimate = false;
+    [SerializeField] bool m_activateLightOnBegin = true;
 
     [Header("FLASH")]
     public float FlashInterval = .1f;
@@ -41,11 +43,17 @@ public class AnimatedProjector : MonoBehaviour
             }
         }
 
-        
+        if (m_activateLightOnBegin)
+        {
+            m_lightSpot.enabled = false;
+            m_lightArea.enabled = false;
+        }
     }
 
     void ChangeTargetRepeat()
     {
+        if (!m_canAnimate) return;
+
         if (m_targetIdx < Targets.Count - 1)
         {
             m_targetIdx++;
@@ -54,6 +62,8 @@ public class AnimatedProjector : MonoBehaviour
     }
     void ChangetDestRepeat()
     {
+        if (!m_canAnimate) return;
+
         if (m_destIdx < MoveDestinations.Count - 1)
         {
             m_destIdx++;
@@ -106,6 +116,9 @@ public class AnimatedProjector : MonoBehaviour
         if (p_destChangeSpeed == 0) p_destChangeSpeed = m_destChangeSpeed;
         m_destChangeSpeed = p_destChangeSpeed;
 
+        m_lightSpot.enabled = true;
+        m_lightArea.enabled = true;
+
         if (m_debug) print("[PROJECTOR] " + name + " activated !");
         m_canAnimate = true;
 
@@ -121,22 +134,32 @@ public class AnimatedProjector : MonoBehaviour
             InvokeRepeating(nameof(ChangetDestRepeat), 0, m_destChangeSpeed);
         }
     }
-    public IEnumerator StartAnimationCoroutine()
+    public IEnumerator StartAnimationCoroutine(float p_targetChangeSpeed = 0, float p_destChangeSpeed = 0)
     {
         yield return new WaitForSeconds(TimeUntilBegin);
 
-        StartAnimation();
+        StartAnimation(p_targetChangeSpeed, p_destChangeSpeed);
     }
 
     void FlashRepeat()
     {
         if (!m_canAnimate) return;
 
-        m_light.enabled = !m_light.enabled;
+        m_lightSpot.enabled = !m_lightSpot.enabled;
+        m_lightArea.enabled = !m_lightArea.enabled;
+
     }
 
     private void OnDisable()
     {
         m_canAnimate = false;
+    }
+
+    internal void StopAnimation()
+    {
+        m_canAnimate = false;
+
+        m_lightSpot.enabled = false;
+        m_lightArea.enabled = false;
     }
 }
