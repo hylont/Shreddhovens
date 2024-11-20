@@ -4,8 +4,7 @@ using UnityEngine;
 
 public enum EAnimation
 {
-    ROTATION_TO_POINT, LOOKAT, FLASH, LERP
-}
+    ROTATION_TO_POINT, FLASH, LERP}
 
 public class AnimatedProjector : MonoBehaviour
 {
@@ -13,7 +12,10 @@ public class AnimatedProjector : MonoBehaviour
     public List<EAnimation> Animations;
 
     public float TimeUntilBegin = 0f;
-    public Transform Target, MoveDestination;
+    public List<Transform> Targets, MoveDestinations;
+    public int m_targetIdx, m_destIdx;
+    public float m_targetChangeSpeed = 0f;
+    public float m_destChangeSpeed = 0f;
 
     public float RotationSpeed = 1f, MovementSpeed = 1f;
 
@@ -22,38 +24,108 @@ public class AnimatedProjector : MonoBehaviour
     [Header("FLASH")]
     public float FlashInterval = .1f;
 
+    [Header("Debug")]
+    [SerializeField] bool m_debug = false;
     private void Awake()
     {
-        if(m_canAnimate) StartAnimation();
+        if (m_canAnimate)
+        {
+            if(TimeUntilBegin > 0f)
+            {
+                m_canAnimate = false;
+                StartCoroutine(StartAnimationCoroutine());
+            }
+            else
+            {
+                StartAnimation();
+            }
+        }
+
+        
+    }
+
+    void ChangeTargetRepeat()
+    {
+        if (m_targetIdx < Targets.Count - 1)
+        {
+            m_targetIdx++;
+        }
+        else m_targetIdx = 0;
+    }
+    void ChangetDestRepeat()
+    {
+        if (m_destIdx < MoveDestinations.Count - 1)
+        {
+            m_destIdx++;
+        }
+        else m_destIdx = 0;
     }
 
     private void Update()
     {
-        if (!m_canAnimate) return;
+        if (!m_canAnimate) return;        
 
-        foreach(var anim in Animations)
+        foreach (var anim in Animations)
         {
-            if (anim == EAnimation.LERP)
+            if(anim != EAnimation.FLASH)
             {
-                transform.position = Vector3.Lerp(transform.position, MoveDestination.position, Time.deltaTime * MovementSpeed);
-            }
-            if(anim == EAnimation.LOOKAT)
-            {
-                transform.LookAt(Target.position);
-            }
-            if(anim == EAnimation.ROTATION_TO_POINT)
-            {
-                transform.rotation = Quaternion.Lerp(transform.rotation, 
-                    Quaternion.FromToRotation(transform.position, Target.position), Time.deltaTime * RotationSpeed);
-            }
+                if (MoveDestinations.Count > 0 && m_destIdx >= MoveDestinations.Count)
+                {
+                    Debug.LogError("[PROJECTOR] Shouldn't exceed destinations");
+                    return;
+                }
+
+                if (Targets.Count > 0 && m_targetIdx >= Targets.Count)
+                {
+                    Debug.LogError("[PROJECTOR] Shouldn't exceed targets");
+                    return;
+                }
+
+                if (anim == EAnimation.LERP)
+                {
+                    transform.position = Vector3.Lerp(transform.position, MoveDestinations[m_destIdx].position, Time.deltaTime * MovementSpeed);
+                }
+
+                if (anim == EAnimation.ROTATION_TO_POINT)
+                {
+                    Quaternion lookOnLook =
+                    Quaternion.LookRotation(Targets[m_targetIdx].transform.position - transform.position);
+
+                    transform.rotation =
+                    Quaternion.Slerp(transform.rotation, lookOnLook, Time.deltaTime * RotationSpeed);
+                }
+            }            
         }
     }
 
-    public void StartAnimation()
+    public void StartAnimation(float p_targetChangeSpeed = 0, float p_destChangeSpeed = 0)
     {
+        if (p_targetChangeSpeed == 0) p_targetChangeSpeed = m_targetChangeSpeed;
+        m_targetChangeSpeed = p_targetChangeSpeed;
+
+        if (p_destChangeSpeed == 0) p_destChangeSpeed = m_destChangeSpeed;
+        m_destChangeSpeed = p_destChangeSpeed;
+
+        if (m_debug) print("[PROJECTOR] " + name + " activated !");
         m_canAnimate = true;
 
         if(Animations.Contains(EAnimation.FLASH)) InvokeRepeating(nameof(FlashRepeat), 0, FlashInterval);
+
+        if (Targets.Count > 1 && m_targetChangeSpeed > 0)
+        {
+            InvokeRepeating(nameof(ChangeTargetRepeat), 0, m_targetChangeSpeed);
+        }
+
+        if (MoveDestinations.Count > 1 && m_destChangeSpeed > 0)
+        {
+            InvokeRepeating(nameof(ChangetDestRepeat), 0, m_destChangeSpeed);
+        }
+    }
+    public IEnumerator StartAnimationCoroutine()
+    {
+        yield return new WaitForSeconds(TimeUntilBegin);
+
+        StartAnimation();
     }
 
     void FlashRepeat()

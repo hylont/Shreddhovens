@@ -1,8 +1,4 @@
-﻿using System;
-using UnityEngine;
-using Adobe.Substance.Input.Description;
-
-namespace Adobe.Substance.Input
+﻿namespace Adobe.Substance.Input
 {
     [System.Serializable]
     public class SubstanceInvalidInput : SubstanceInputBase

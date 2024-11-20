@@ -1,7 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
 public class PianoBuilder : MonoBehaviour

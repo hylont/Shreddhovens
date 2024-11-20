@@ -2,12 +2,9 @@ using Adobe.Substance;
 using Adobe.SubstanceEditor.ProjectSettings;
 using System;
 using System.Collections.Generic;
-using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEditor;
-using UnityEditor.Graphs;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 

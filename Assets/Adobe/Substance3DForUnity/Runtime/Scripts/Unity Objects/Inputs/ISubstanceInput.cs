@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 using Adobe.Substance.Input.Description;
 
 namespace Adobe.Substance.Input

@@ -49,12 +49,17 @@ MonoBehaviour:
   m_light: {fileID: 4868817293019972352}
   Animations: 
   TimeUntilBegin: 0
-  Target: {fileID: 0}
-  MoveDestination: {fileID: 0}
+  Targets: []
+  MoveDestinations: []
+  m_targetIdx: 0
+  m_destIdx: 0
+  m_targetChangeSpeed: 0
+  m_destChangeSpeed: 0
   RotationSpeed: 0
   MovementSpeed: 0
   m_canAnimate: 0
   FlashInterval: 0.1
+  m_debug: 0
 --- !u!1 &8200279471068224104
 GameObject:
   m_ObjectHideFlags: 0
@@ -66,9 +71,8 @@ GameObject:
   - component: {fileID: 915050944212665165}
   - component: {fileID: 5264240902587884582}
   - component: {fileID: 2968934873431149577}
-  - component: {fileID: 4012238084354712448}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: TemporaryMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -139,27 +143,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4012238084354712448
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8200279471068224104}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8250289097003260435
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,9 +189,9 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.02114594, g: 1, b: 0, a: 1}
   m_Intensity: 999999
-  m_Range: 5
-  m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
+  m_Range: 10
+  m_SpotAngle: 6
+  m_InnerSpotAngle: 1
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -229,13 +212,13 @@ Light:
       e13: 0
       e20: 0
       e21: 0
-      e22: 0.40816325
-      e23: -1.0408163
+      e22: 0.20202021
+      e23: -1.020202
       e30: 0
       e31: 0
       e32: 0
       e33: 1
-    m_UseCullingMatrixOverride: 1
+    m_UseCullingMatrixOverride: 0
   m_Cookie: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
@@ -250,8 +233,8 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 2.5, w: 2.5039968}
-  m_UseBoundingSphereOverride: 1
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 5, w: 5.0019994}
+  m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -270,10 +253,10 @@ MonoBehaviour:
   m_Intensity: 999999
   m_EnableSpotReflector: 1
   m_LuxAtDistance: 1
-  m_InnerSpotPercent: 0
+  m_InnerSpotPercent: 100
   m_SpotIESCutoffPercent: 100
   m_LightDimmer: 1
-  m_VolumetricDimmer: 2.36
+  m_VolumetricDimmer: 10
   m_LightUnit: 2
   m_FadeDistance: 10000
   m_VolumetricFadeDistance: 10000
@@ -286,7 +269,7 @@ MonoBehaviour:
   m_ShapeRadius: 0.025
   m_SoftnessScale: 1
   m_UseCustomSpotLightShadowCone: 0
-  m_CustomSpotLightShadowCone: 30
+  m_CustomSpotLightShadowCone: 1
   m_MaxSmoothness: 0.99
   m_ApplyRangeAttenuation: 1
   m_DisplayAreaLightEmissiveMesh: 0
@@ -375,5 +358,5 @@ MonoBehaviour:
   m_ObsoleteCustomShadowResolution: 512
   m_ObsoleteContactShadows: 0
   m_PointlightHDType: 0
-  m_SpotLightShape: 2
+  m_SpotLightShape: 0
   m_AreaLightShape: 0

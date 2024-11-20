@@ -2,9 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
-using System.Threading.Tasks;
 using Adobe.Substance;
-using static UnityEngine.Networking.UnityWebRequest;
 
 
 #if UNITY_2020_2_OR_NEWER

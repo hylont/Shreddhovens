@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-
-namespace Adobe.Substance.Input.Description
+﻿namespace Adobe.Substance.Input.Description
 {
     [System.Serializable]
     public class SubstanceInputDescription

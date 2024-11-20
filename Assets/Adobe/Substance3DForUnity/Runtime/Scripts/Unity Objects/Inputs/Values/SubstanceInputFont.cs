@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using Adobe.Substance.Input.Description;
 
 namespace Adobe.Substance.Input
 {

@@ -1,7 +1,6 @@
 using UnityEditor;
 using Adobe.Substance;
 using UnityEngine;
-using Adobe.Substance.Input.Description;
 
 namespace Adobe.SubstanceEditor
 {

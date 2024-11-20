@@ -3,7 +3,6 @@ using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
-using System;
 using System.Reflection;
 
 namespace Adobe.Substance.Connector.Unity

@@ -4,7 +4,6 @@ using System.IO;
 using Adobe.Substance;
 using Adobe.SubstanceEditor.Importer;
 using UnityEditor.SceneManagement;
-using UnityEditor.Graphs;
 
 namespace Adobe.SubstanceEditor
 {

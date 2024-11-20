@@ -1,8 +1,6 @@
-using System.Xml;
-
 namespace MusicXml.Domain
 {
-	public class Note
+    public class Note
 	{
 		internal Note()
 		{

@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 using System.Runtime.InteropServices;
-using Adobe.Substance.Input.Description;
 
 namespace Adobe.Substance.Input
 {

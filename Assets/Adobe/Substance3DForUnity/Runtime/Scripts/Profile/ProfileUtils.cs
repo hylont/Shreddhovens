@@ -1,8 +1,5 @@
 #define SUBSTANCE_PROFILE_ENABLE
 
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 #if SUBSTANCE_PROFILE_ENABLE
 

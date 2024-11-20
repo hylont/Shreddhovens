@@ -6,7 +6,6 @@ using UnityEngine;
 
 #if UNITY_EDITOR
 
-using Unity.Collections.LowLevel.Unsafe;
 
 #endif
 

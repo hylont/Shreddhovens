@@ -1,6 +1,3 @@
-using System;
-using System.Runtime.InteropServices;
-using UnityEngine;
 using Adobe.Substance;
 
 namespace Adobe.SubstanceEditor

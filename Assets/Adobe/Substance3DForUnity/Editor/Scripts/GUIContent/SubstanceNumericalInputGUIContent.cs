@@ -1,4 +1,3 @@
-using Adobe.Substance;
 using Adobe.Substance.Input.Description;
 using UnityEditor;
 using UnityEngine;
