@@ -175,6 +175,7 @@ public class ScoreLoader : MonoBehaviour
                 }
             }
         }
+
         if(m_allNotes.ContainsKey(m_16thCount+1) && m_allNotes[m_16thCount+1] != null)
         {
             List<PianoKey> l_playedKeys = new();
