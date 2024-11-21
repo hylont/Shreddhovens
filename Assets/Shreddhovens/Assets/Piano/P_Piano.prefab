@@ -202,14 +202,30 @@ MonoBehaviour:
   m_maxHandSpan: 0.16
   m_leftHandTarget: {fileID: 0}
   m_rightHandTarget: {fileID: 0}
-  m_handsOffsetPosition: {x: 0.2, y: -0.05, z: 0}
+  m_handsOffsetPosition: {x: 0.25, y: 0.025, z: 0}
   m_handsOffsetRotationLeft: {x: 0, y: 0, z: 90}
   m_handsOffsetRotationRight: {x: 0, y: 180, z: -90}
-  m_leftHandFingerTargets: []
-  m_rightHandFingerTargets: []
+  m_leftHandFingerTargets:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_rightHandFingerTargets:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   m_handsFingersOffsetPosition: {x: 0.15, y: 0, z: 0}
   m_handsFingersOffsetRotationLeft: {x: 0, y: 0, z: 90}
-  m_handsFingersOffsetRotationRight: {x: 0, y: 0, z: 0}
+  m_handsFingersOffsetRotationRight: {x: 0, y: 0, z: -90}
+  m_groups: []
+  m_nbGroupsActivatedSimultaneously: 2
+  m_groupDeactivationChancesAtMeasure: 0.2
+  m_infoLeftHandText: {fileID: 0}
+  m_infoRightHandText: {fileID: 0}
+  m_infoNotesComputedText: {fileID: 0}
 --- !u!82 &3076582454828600991
 AudioSource:
   m_ObjectHideFlags: 0

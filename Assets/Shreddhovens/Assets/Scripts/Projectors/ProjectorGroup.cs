@@ -6,6 +6,7 @@ public class ProjectorGroup : MonoBehaviour
 {
     AnimatedProjector[] m_projectors = null;
     [SerializeField] int m_projectorsToActivateAtEachStart = 1;
+    [SerializeField] List<Material> m_emissiveMaterials = new();
 
     public float ActivationDelay = 0, TargetChangeSpeed = 0, DestChangeSpeed = 0, FlashInterval = .1f;
 
@@ -20,12 +21,17 @@ public class ProjectorGroup : MonoBehaviour
     {
         int l_stepsUntilDelay = m_projectorsToActivateAtEachStart;
         int l_projectorSetCounter = 0;
+
+        Material l_chosenMaterial = m_emissiveMaterials[Random.Range(0, m_emissiveMaterials.Count)];
+
         for (int l_idxProjector = 0; l_idxProjector < m_projectors.Length; l_idxProjector++)
         {
             AnimatedProjector l_projector = m_projectors[l_idxProjector];
             l_projector.TimeUntilBegin = l_projectorSetCounter * ActivationDelay;
 
             l_projector.FlashInterval = FlashInterval;
+
+            l_projector.SetMaterial(l_chosenMaterial);
 
             l_projector.StartAnimation(TargetChangeSpeed, DestChangeSpeed);
 

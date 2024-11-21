@@ -9,7 +9,9 @@ public enum EAnimation
 
 public class AnimatedProjector : MonoBehaviour
 {
-    [SerializeField] Light m_lightSpot, m_lightArea;
+    [SerializeField] GameObject m_lightObject;
+    public float LightIntensity = 100;
+
     public List<EAnimation> Animations;
 
     public float TimeUntilBegin = 0f;
@@ -45,9 +47,16 @@ public class AnimatedProjector : MonoBehaviour
 
         if (m_activateLightOnBegin)
         {
-            m_lightSpot.enabled = false;
-            m_lightArea.enabled = false;
+            m_lightObject.SetActive(false);
+            //m_lightArea.SetActive(false;
         }
+    }
+
+    public void SetMaterial(Material material)
+    {
+        m_lightObject.GetComponent<Renderer>().material = material;
+        m_lightObject.GetComponent<Renderer>().material.SetFloat("_EmissiveIntensity", 
+            LightIntensity + UnityEngine.Random.Range(LightIntensity * -.1f, LightIntensity *.1f));
     }
 
     void ChangeTargetRepeat()
@@ -116,8 +125,8 @@ public class AnimatedProjector : MonoBehaviour
         if (p_destChangeSpeed == 0) p_destChangeSpeed = m_destChangeSpeed;
         m_destChangeSpeed = p_destChangeSpeed;
 
-        m_lightSpot.enabled = true;
-        m_lightArea.enabled = true;
+        //Light
+        m_lightObject.SetActive(true);
 
         if (m_debug) print("[PROJECTOR] " + name + " activated !");
         m_canAnimate = true;
@@ -145,9 +154,7 @@ public class AnimatedProjector : MonoBehaviour
     {
         if (!m_canAnimate) return;
 
-        m_lightSpot.enabled = !m_lightSpot.enabled;
-        m_lightArea.enabled = !m_lightArea.enabled;
-
+        m_lightObject.SetActive(!m_lightObject.activeSelf);
     }
 
     private void OnDisable()
@@ -159,7 +166,7 @@ public class AnimatedProjector : MonoBehaviour
     {
         m_canAnimate = false;
 
-        m_lightSpot.enabled = false;
-        m_lightArea.enabled = false;
+        m_lightObject.SetActive(false);
+        //m_lightArea.SetActive(false);
     }
 }
