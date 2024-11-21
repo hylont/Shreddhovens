@@ -2968,7 +2968,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1312848139
 Transform:
   m_ObjectHideFlags: 0
@@ -3239,8 +3239,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1575204810}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.30341658, y: 0.20317191, z: -0.06638734, w: -0.92857546}
-  m_LocalPosition: {x: 2.805, y: 1.2, z: -0.738}
+  m_LocalRotation: {x: 0, y: 0.70710576, z: 0, w: 0.70710784}
+  m_LocalPosition: {x: -9.32, y: 2.33, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3853,7 +3853,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1674414247
 Transform:
   m_ObjectHideFlags: 0
@@ -6047,14 +6047,6 @@ PrefabInstance:
       propertyPath: m_groups.Array.data[2]
       value: 
       objectReference: {fileID: 1372776030}
-    - target: {fileID: 7564342019100648930, guid: f3b6d99f95c193b4eb686523c49df918, type: 3}
-      propertyPath: m_handsOffsetPosition.x
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 7564342019100648930, guid: f3b6d99f95c193b4eb686523c49df918, type: 3}
-      propertyPath: m_handsOffsetPosition.y
-      value: 0.025
-      objectReference: {fileID: 0}
     - target: {fileID: 7564342019100648930, guid: f3b6d99f95c193b4eb686523c49df918, type: 3}
       propertyPath: m_handsOffsetRotation.y
       value: 0

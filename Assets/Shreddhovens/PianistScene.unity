@@ -3723,6 +3723,11 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!4 &1620650109 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8394075763033493077, guid: f3b6d99f95c193b4eb686523c49df918, type: 3}
+  m_PrefabInstance: {fileID: 5447172344263650627}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1629956964
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6181,20 +6186,8 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1408994420403156353, guid: f3b6d99f95c193b4eb686523c49df918, type: 3}
-      propertyPath: m_keyXOffset
-      value: 0.035
-      objectReference: {fileID: 0}
     - target: {fileID: 1454275270462868481, guid: f3b6d99f95c193b4eb686523c49df918, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1707902965482488056, guid: f3b6d99f95c193b4eb686523c49df918, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1707902965482488056, guid: f3b6d99f95c193b4eb686523c49df918, type: 3}
-      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1801154074173708304, guid: f3b6d99f95c193b4eb686523c49df918, type: 3}
@@ -6204,18 +6197,6 @@ PrefabInstance:
     - target: {fileID: 2704273066551292268, guid: f3b6d99f95c193b4eb686523c49df918, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2785360033794968467, guid: f3b6d99f95c193b4eb686523c49df918, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2785360033794968467, guid: f3b6d99f95c193b4eb686523c49df918, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2785360033794968467, guid: f3b6d99f95c193b4eb686523c49df918, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2785360033794968467, guid: f3b6d99f95c193b4eb686523c49df918, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6349,6 +6330,10 @@ PrefabInstance:
       propertyPath: m_infoNotesComputedText
       value: 
       objectReference: {fileID: 845416264}
+    - target: {fileID: 7564342019100648930, guid: f3b6d99f95c193b4eb686523c49df918, type: 3}
+      propertyPath: m_rightHandRestPosition
+      value: 
+      objectReference: {fileID: 1620650109}
     - target: {fileID: 7564342019100648930, guid: f3b6d99f95c193b4eb686523c49df918, type: 3}
       propertyPath: m_rightHandTargets.Array.size
       value: 5

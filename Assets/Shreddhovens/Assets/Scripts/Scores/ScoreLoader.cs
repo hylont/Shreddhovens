@@ -30,6 +30,7 @@ public class ScoreLoader : MonoBehaviour
     [SerializeField] Vector3 m_handsOffsetPosition = new(-.1f,-.05f,0);
     [SerializeField] Vector3 m_handsOffsetRotationLeft = new(0,0,90);
     [SerializeField] Vector3 m_handsOffsetRotationRight = new(0,180,-90);
+    [SerializeField] Transform m_rightHandRestPosition;
     [Header("Fingers placement")]
     [SerializeField] List<Lerper> m_leftHandFingerTargets, m_rightHandFingerTargets;
     [SerializeField] Vector3 m_handsFingersOffsetPosition = new(0, 0, 0);
@@ -180,35 +181,6 @@ public class ScoreLoader : MonoBehaviour
                 
                     if (m_infoNotesComputedText) m_infoNotesComputedText.text += " " + l_playedKey.gameObject.name;
                 }
-                //bool l_needsTwoHands = false;
-                //PianoKey l_begSpanKey = l_playedKeys[0];
-                //List<Vector3> l_leftKeys, l_rightKeys;
-                //GetHandKeys(l_playedKeys, ref l_begSpanKey, ref l_needsTwoHands, out l_leftKeys, out l_rightKeys);
-
-                //Vector3 l_leftHandPos = Vector3.zero, l_rightHandPos = Vector3.zero;
-                //foreach (Vector3 l_leftHandKey in l_leftKeys) l_leftHandPos += l_leftHandKey;
-                //foreach (Vector3 l_rightHandKey in l_leftKeys) l_rightHandPos += l_rightHandKey;
-
-                //if (l_leftKeys.Count > 0)
-                //{
-                //    for (int l_idxFinger = 0; l_idxFinger < m_leftHandFingerTargets.Count
-                //        && l_idxFinger < l_leftKeys.Count; l_idxFinger++)
-                //    {
-                //        m_leftHandFingerTargets[l_idxFinger].SetDestination(l_leftKeys[l_idxFinger] + m_handsFingersOffsetPosition);
-                //        m_leftHandFingerTargets[l_idxFinger].transform.rotation = Quaternion.Euler(m_handsFingersOffsetRotationLeft);
-                //    }
-                //}
-
-                //if (l_rightKeys.Count > 0)
-                //{
-                //    for (int l_idxFinger = 0; l_idxFinger < m_rightHandFingerTargets.Count
-                //        && l_idxFinger < l_rightKeys.Count; l_idxFinger++)
-                //    {
-                //        m_rightHandFingerTargets[l_idxFinger].SetDestination(l_rightKeys[l_idxFinger] + m_handsFingersOffsetPosition);
-                //        m_rightHandFingerTargets[l_idxFinger].transform.rotation = Quaternion.Euler(m_handsFingersOffsetRotationRight);
-                //    }
-                //}
-
             }
 
             if (l_playedKeys.Count > 0
@@ -295,6 +267,18 @@ public class ScoreLoader : MonoBehaviour
                 {
                     SetHandDestination(!l_needsTwoHands, ref l_currentHandKeys, ref l_currentHandFingersUsed);
                 }
+
+                if(!l_needsTwoHands && l_currentHandKeys.Count == 0)
+                {
+                    m_rightHandTarget.SetDestination(m_rightHandRestPosition.transform.position);
+                    m_rightHandTarget.transform.rotation = Quaternion.Euler(m_handsOffsetRotationRight);
+
+                    for (int l_idxFinger = 0; l_idxFinger < m_rightHandFingerTargets.Count; l_idxFinger++)
+                    {
+                        m_rightHandFingerTargets[l_idxFinger].SetDestination(m_rightHandRestPosition.transform.position + m_handsFingersOffsetPosition);
+                        m_rightHandFingerTargets[l_idxFinger].transform.rotation = Quaternion.Euler(m_handsFingersOffsetRotationRight);
+                    }
+                }
             }
         }
 
@@ -310,9 +294,9 @@ public class ScoreLoader : MonoBehaviour
     void SetHandDestination(bool p_leftHand, ref List<Vector3> p_keysPositions, ref List<bool> p_fingersUsed)
     {
         Vector3 l_averageKeyPos = new(
-            p_keysPositions.Average(v => v.x), // Average of x-components
-            p_keysPositions.Average(v => v.y), // Average of y-components
-            p_keysPositions.Average(v => v.z)  // Average of z-components
+            p_keysPositions.Average(v => v.x),
+            p_keysPositions.Average(v => v.y),
+            p_keysPositions.Average(v => v.z) 
         );
 
         if (p_leftHand)

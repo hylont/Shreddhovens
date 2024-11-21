@@ -47,6 +47,46 @@ public class PianoKey : MonoBehaviour, IComparable<PianoKey>
 
     public int CompareTo(PianoKey other)
     {
-        return other.name.CompareTo(other.name);
+        if (name[0] == other.name[0]) return 0;
+
+        if (name[name.Length - 1] < other.name[other.name.Length - 1])
+        {
+            //print("octave " + name + " < " + other.name);
+            return -1;
+        }
+        else if (name[name.Length - 1] > other.name[other.name.Length - 1])
+        {
+            //print("octave " + name + " > " + other.name);
+            return 1;
+        }        
+        else
+        {
+            if (name[0] < other.name[0])
+            {
+                //print("note "+name + " > " + other.name);
+                return -1;
+            }
+            else if (name[0] > other.name[0])
+            {
+                //print("note "+name + " < " + other.name);
+                return 1;
+            }
+            else
+            {
+                if (name.Contains('b') && !other.name.Contains('b'))
+                {
+                    //print("bemol "+name + " > " + other.name);
+                    return -1;
+                }
+
+                if (!name.Contains('b') && other.name.Contains('b'))
+                {
+                    //print("bemol "+name + " < " + other.name);
+                    return 1;
+                }
+
+                return 0;
+            }
+        }
     }
 }
