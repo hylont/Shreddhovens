@@ -110,12 +110,6 @@ public class AnimatedProjector : MonoBehaviour
 
                 if (anim == EAnimation.ROTATION_TO_POINT)
                 {
-                    //m_supportTransform.transform.LookAt(Targets[m_targetIdx].position);
-                    //Vector3 l_supportEuler = m_supportTransform.eulerAngles;
-                    //l_supportEuler.x = 0;
-                    //l_supportEuler.z = 0;
-                    //m_supportTransform.eulerAngles = l_supportEuler;
-                    //m_beamTransform.transform.LookAt(Targets[m_targetIdx].position);
                     Vector3 l_directionToTarget = Targets[m_targetIdx].position - m_supportTransform.position;
                     Quaternion l_targetRotationSupport = Quaternion.LookRotation(l_directionToTarget);
                     Quaternion _smoothedRotationSupport = Quaternion.Slerp(m_supportTransform.rotation, l_targetRotationSupport, Time.deltaTime * RotationSpeed);
@@ -190,6 +184,5 @@ public class AnimatedProjector : MonoBehaviour
         m_canAnimate = false;
 
         m_lightObject.SetActive(false);
-        //m_lightArea.SetActive(false);
     }
 }
