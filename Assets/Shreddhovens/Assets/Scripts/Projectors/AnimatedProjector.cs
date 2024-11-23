@@ -24,6 +24,7 @@ public class AnimatedProjector : MonoBehaviour
     public float RotationSpeed = 1f, MovementSpeed = 1f;
     [SerializeField] Transform m_beamTransform;
     [SerializeField] Transform m_supportTransform;
+    [SerializeField] Vector3 m_supportRotationOffset = Vector3.zero;
 
     [SerializeField] bool m_canAnimate = false;
     [SerializeField] bool m_activateLightOnBegin = true;
@@ -116,8 +117,8 @@ public class AnimatedProjector : MonoBehaviour
 
                     m_supportTransform.rotation = _smoothedRotationSupport;
                     Vector3 l_supportEuler = m_supportTransform.eulerAngles;
-                    l_supportEuler.x = 0;
-                    l_supportEuler.z = 0;
+                    l_supportEuler.x = m_supportRotationOffset.x;
+                    l_supportEuler.z = m_supportRotationOffset.z;
                     m_supportTransform.eulerAngles = l_supportEuler;
 
                     l_directionToTarget = Targets[m_targetIdx].position - m_beamTransform.position;
