@@ -10,6 +10,7 @@ public enum EAnimation
 public class AnimatedProjector : MonoBehaviour
 {
     [SerializeField] GameObject m_lightObject;
+    [SerializeField] GameObject m_lightOriginObject;
     public float LightIntensity = 100;
 
     public List<EAnimation> Animations;
@@ -21,6 +22,8 @@ public class AnimatedProjector : MonoBehaviour
     public float m_destChangeSpeed = 0f;
 
     public float RotationSpeed = 1f, MovementSpeed = 1f;
+    [SerializeField] Transform m_beamTransform;
+    [SerializeField] Transform m_supportTransform;
 
     [SerializeField] bool m_canAnimate = false;
     [SerializeField] bool m_activateLightOnBegin = true;
@@ -86,7 +89,7 @@ public class AnimatedProjector : MonoBehaviour
 
         foreach (var anim in Animations)
         {
-            if(anim != EAnimation.FLASH)
+            if (anim != EAnimation.FLASH)
             {
                 if (MoveDestinations.Count > 0 && m_destIdx >= MoveDestinations.Count)
                 {
@@ -107,14 +110,28 @@ public class AnimatedProjector : MonoBehaviour
 
                 if (anim == EAnimation.ROTATION_TO_POINT)
                 {
-                    Quaternion lookOnLook =
-                    Quaternion.LookRotation(Targets[m_targetIdx].transform.position - transform.position);
+                    Vector3 l_directionToTarget = Targets[m_targetIdx].position - m_supportTransform.position;
+                    Quaternion l_targetRotationSupport = Quaternion.LookRotation(l_directionToTarget);
+                    Quaternion _smoothedRotationSupport = Quaternion.Slerp(m_supportTransform.rotation, l_targetRotationSupport, Time.deltaTime * RotationSpeed);
 
-                    transform.rotation =
-                    Quaternion.Slerp(transform.rotation, lookOnLook, Time.deltaTime * RotationSpeed);
+                    m_supportTransform.rotation = _smoothedRotationSupport;
+                    Vector3 l_supportEuler = m_supportTransform.eulerAngles;
+                    l_supportEuler.x = 0;
+                    l_supportEuler.z = 0;
+                    m_supportTransform.eulerAngles = l_supportEuler;
+
+                    l_directionToTarget = Targets[m_targetIdx].position - m_beamTransform.position;
+                    Quaternion l_targetRotationBeam = Quaternion.LookRotation(l_directionToTarget);
+                    Quaternion l_smoothedRotationBeam = Quaternion.Slerp(m_beamTransform.rotation, l_targetRotationBeam, Time.deltaTime * RotationSpeed);
+
+                    m_beamTransform.rotation = l_smoothedRotationBeam;
                 }
-            }            
+            }
         }
+        m_lightOriginObject.transform.localScale =
+                new(m_lightOriginObject.transform.localScale.x, m_lightOriginObject.transform.localScale.y,
+                Targets.Count > 0 ? Vector3.Distance(m_lightOriginObject.transform.position, Targets[m_targetIdx].transform.position)*.5f : 5);
+        
     }
 
     public void StartAnimation(float p_targetChangeSpeed = 0, float p_destChangeSpeed = 0)
@@ -167,6 +184,5 @@ public class AnimatedProjector : MonoBehaviour
         m_canAnimate = false;
 
         m_lightObject.SetActive(false);
-        //m_lightArea.SetActive(false);
     }
 }

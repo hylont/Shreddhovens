@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 685140112067965990}
   - component: {fileID: 2943715306707756887}
   - component: {fileID: 140490576008058099}
+  - component: {fileID: 2138306233725666813}
   m_Layer: 0
   m_Name: Reflection Probe
   m_TagString: Untagged
@@ -86,8 +87,8 @@ MonoBehaviour:
       viewerScale: 1
     type: 0
     mode: 1
-    realtimeMode: 1
-    timeSlicing: 0
+    realtimeMode: 2
+    timeSlicing: 1
     lighting:
       multiplier: 1
       weight: 1
@@ -473,6 +474,19 @@ MonoBehaviour:
   m_ObsoleteBlendNormalDistanceNegative: {x: 0, y: 0, z: 0}
   m_ObsoleteBoxSideFadePositive: {x: 1, y: 1, z: 1}
   m_ObsoleteBoxSideFadeNegative: {x: 1, y: 1, z: 1}
+--- !u!114 &2138306233725666813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1621011640661264226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e8c0759e13364e4aac351ea5d056e7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_repeatRate: 0.1
 --- !u!1001 &7759673128571382644
 PrefabInstance:
   m_ObjectHideFlags: 0
