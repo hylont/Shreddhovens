@@ -21,6 +21,11 @@ public class AnimatedProjector : MonoBehaviour
     public float m_targetChangeSpeed = 0f;
     public float m_destChangeSpeed = 0f;
 
+    //Timers
+    float m_targetChangeTimer = 0;
+    float m_destChangeTimer = 0;
+    float m_flashChangeTimer = 0;
+
     public float RotationSpeed = 1f, MovementSpeed = 1f;
     [SerializeField] Transform m_beamTransform;
     [SerializeField] Transform m_supportTransform;
@@ -51,7 +56,7 @@ public class AnimatedProjector : MonoBehaviour
 
         if (m_activateLightOnBegin)
         {
-            m_lightObject.SetActive(false);
+            m_lightObject.SetActive(true);
             //m_lightArea.SetActive(false;
         }
     }
@@ -63,30 +68,9 @@ public class AnimatedProjector : MonoBehaviour
             LightIntensity + UnityEngine.Random.Range(LightIntensity * -.1f, LightIntensity *.1f));
     }
 
-    void ChangeTargetRepeat()
-    {
-        if (!m_canAnimate) return;
-
-        if (m_targetIdx < Targets.Count - 1)
-        {
-            m_targetIdx++;
-        }
-        else m_targetIdx = 0;
-    }
-    void ChangetDestRepeat()
-    {
-        if (!m_canAnimate) return;
-
-        if (m_destIdx < MoveDestinations.Count - 1)
-        {
-            m_destIdx++;
-        }
-        else m_destIdx = 0;
-    }
-
     private void Update()
     {
-        if (!m_canAnimate) return;        
+        if (!m_canAnimate) return;
 
         foreach (var anim in Animations)
         {
@@ -107,6 +91,18 @@ public class AnimatedProjector : MonoBehaviour
                 if (anim == EAnimation.LERP)
                 {
                     transform.position = Vector3.Lerp(transform.position, MoveDestinations[m_destIdx].position, Time.deltaTime * MovementSpeed);
+
+                    m_destChangeTimer += Time.deltaTime;
+                    if(m_destChangeTimer > m_destChangeSpeed)
+                    {
+                        if (m_destIdx < MoveDestinations.Count - 1)
+                        {
+                            m_destIdx++;
+                        }
+                        else m_destIdx = 0;
+
+                        m_destChangeTimer = 0;
+                    }
                 }
 
                 if (anim == EAnimation.ROTATION_TO_POINT)
@@ -126,6 +122,28 @@ public class AnimatedProjector : MonoBehaviour
                     Quaternion l_smoothedRotationBeam = Quaternion.Slerp(m_beamTransform.rotation, l_targetRotationBeam, Time.deltaTime * RotationSpeed);
 
                     m_beamTransform.rotation = l_smoothedRotationBeam;
+
+                    m_targetChangeTimer += Time.deltaTime;
+                    if(m_targetChangeTimer > m_targetChangeSpeed)
+                    {
+                        if (m_targetIdx < Targets.Count - 1)
+                        {
+                            m_targetIdx++;
+                        }
+                        else m_targetIdx = 0;
+
+                        m_targetChangeTimer = 0;
+                    }
+                }
+            }
+            else
+            {
+                m_flashChangeTimer += Time.deltaTime;
+                if(m_flashChangeTimer > FlashInterval)
+                {
+                    m_lightObject.SetActive(!m_lightObject.activeSelf);
+
+                    m_flashChangeTimer = 0;
                 }
             }
         }
@@ -148,31 +166,12 @@ public class AnimatedProjector : MonoBehaviour
 
         if (m_debug) print("[PROJECTOR] " + name + " activated !");
         m_canAnimate = true;
-
-        if(Animations.Contains(EAnimation.FLASH)) InvokeRepeating(nameof(FlashRepeat), 0, FlashInterval);
-
-        if (Targets.Count > 1 && m_targetChangeSpeed > 0)
-        {
-            InvokeRepeating(nameof(ChangeTargetRepeat), 0, m_targetChangeSpeed);
-        }
-
-        if (MoveDestinations.Count > 1 && m_destChangeSpeed > 0)
-        {
-            InvokeRepeating(nameof(ChangetDestRepeat), 0, m_destChangeSpeed);
-        }
     }
     public IEnumerator StartAnimationCoroutine(float p_targetChangeSpeed = 0, float p_destChangeSpeed = 0)
     {
         yield return new WaitForSeconds(TimeUntilBegin);
 
         StartAnimation(p_targetChangeSpeed, p_destChangeSpeed);
-    }
-
-    void FlashRepeat()
-    {
-        if (!m_canAnimate) return;
-
-        m_lightObject.SetActive(!m_lightObject.activeSelf);
     }
 
     private void OnDisable()

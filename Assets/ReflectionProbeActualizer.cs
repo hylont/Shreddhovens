@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.HighDefinition;
 
-[RequireComponent(typeof(ReflectionProbe))]
+[RequireComponent(typeof(HDAdditionalReflectionData))]
 public class ReflectionProbeActualizer : MonoBehaviour
 {
     [SerializeField] float m_repeatRate = .05f;

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ProjectorGroup : MonoBehaviour
@@ -7,6 +8,16 @@ public class ProjectorGroup : MonoBehaviour
     AnimatedProjector[] m_projectors = null;
     [SerializeField] int m_projectorsToActivateAtEachStart = 1;
     [SerializeField] List<Material> m_emissiveMaterials = new();
+
+    [SerializeField] bool m_debug = false;
+
+    [Header("Canvas")]
+    [SerializeField] Canvas m_onlineCanvas;
+    [SerializeField] Canvas m_offlineCanvas;
+    [SerializeField] TextMeshProUGUI m_proceduresText;
+    [SerializeField] TextMeshProUGUI m_targetChangeText;
+    [SerializeField] TextMeshProUGUI m_destChangeText;
+    [SerializeField] TextMeshProUGUI m_colorText;
 
     public float ActivationDelay = 0, TargetChangeSpeed = 0, DestChangeSpeed = 0, FlashInterval = .1f;
 
@@ -19,10 +30,16 @@ public class ProjectorGroup : MonoBehaviour
 
     void StartAnimations()
     {
+        m_offlineCanvas.gameObject.SetActive(false);
+
+        m_proceduresText.text = "";
+
         int l_stepsUntilDelay = m_projectorsToActivateAtEachStart;
         int l_projectorSetCounter = 0;
 
         Material l_chosenMaterial = m_emissiveMaterials[Random.Range(0, m_emissiveMaterials.Count)];
+
+        List<EAnimation> l_includedAnims = new();
 
         for (int l_idxProjector = 0; l_idxProjector < m_projectors.Length; l_idxProjector++)
         {
@@ -35,6 +52,13 @@ public class ProjectorGroup : MonoBehaviour
 
             l_projector.StartAnimation(TargetChangeSpeed, DestChangeSpeed);
 
+            if(m_debug) print($"[PROJECTOR GROUP] {l_projector.name} animation enabled !");
+
+            foreach(EAnimation anim in l_projector.Animations)
+            {
+                if(!l_includedAnims.Contains(anim)) l_includedAnims.Add(anim);
+            }
+
             l_stepsUntilDelay--;
             if(l_stepsUntilDelay == 0)
             {
@@ -42,6 +66,14 @@ public class ProjectorGroup : MonoBehaviour
                 l_projectorSetCounter++;
             }
         }
+
+        m_onlineCanvas.gameObject.SetActive(true);
+
+        foreach (EAnimation anim in l_includedAnims) m_proceduresText.text += $"{anim} / ";
+
+        m_targetChangeText.text = "Target change speed = "+TargetChangeSpeed.ToString("0.00");
+        m_destChangeText.text = "Destination change speed = "+DestChangeSpeed.ToString("0.00");
+        m_colorText.text = l_chosenMaterial.name;
     }
 
     public void Init(float p_activationDelay, float p_targetChangeSpeed, float p_destChangeSpeed)
@@ -63,6 +95,9 @@ public class ProjectorGroup : MonoBehaviour
 
     private void OnDisable()
     {
+        if(m_debug) print("[PROJECTOR GROUP] Disabling");
+        m_onlineCanvas.gameObject.SetActive(false);
+        m_offlineCanvas.gameObject.SetActive(true);
         foreach(AnimatedProjector l_projector in m_projectors)
         {
             l_projector.StopAnimation();

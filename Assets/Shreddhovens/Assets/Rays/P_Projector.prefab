@@ -339,10 +339,10 @@ MonoBehaviour:
   MoveDestinations: []
   m_targetIdx: 0
   m_destIdx: 0
-  m_targetChangeSpeed: 0
+  m_targetChangeSpeed: 1
   m_destChangeSpeed: 0
-  RotationSpeed: 0
-  MovementSpeed: 0
+  RotationSpeed: 5
+  MovementSpeed: 1
   m_beamTransform: {fileID: 2967821027213639645}
   m_supportTransform: {fileID: 4351805970197242625}
   m_supportRotationOffset: {x: 0, y: 0, z: 0}
