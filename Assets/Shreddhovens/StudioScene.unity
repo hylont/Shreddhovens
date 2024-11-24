@@ -5965,6 +5965,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 1650897271652811358, guid: bfc6f50f73bebef4f82a194365337b2b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 179da258c8e21904ebf0a998580e18b7, type: 2}
     - target: {fileID: 1734411403829938663, guid: bfc6f50f73bebef4f82a194365337b2b, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -6169,6 +6173,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7297741894220586946, guid: bfc6f50f73bebef4f82a194365337b2b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 179da258c8e21904ebf0a998580e18b7, type: 2}
     - target: {fileID: 7334990391187439103, guid: bfc6f50f73bebef4f82a194365337b2b, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
