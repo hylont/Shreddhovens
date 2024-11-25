@@ -1470,6 +1470,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: edbf0d3c4306d1c45a0086e896734804, type: 2}
   - {fileID: 2100000, guid: beab124204f80824cbf1fc15b2326ff0, type: 2}
   - {fileID: 2100000, guid: 13c1803eb28ae2d499bc32bef41362b1, type: 2}
+  - {fileID: 2100000, guid: abbb7153934bd48469616f1db91f3ffd, type: 2}
   m_debug: 0
   m_onlineCanvas: {fileID: 8843033895683137903}
   m_offlineCanvas: {fileID: 1784055383515012070}

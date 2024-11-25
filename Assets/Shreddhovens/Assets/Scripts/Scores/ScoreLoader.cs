@@ -178,7 +178,11 @@ public class ScoreLoader : MonoBehaviour
                 if (l_playedKey != null)
                 {
                     l_playedKeys.Add(l_playedKey);
-                
+
+                    m_notesPlayed.text += note + " ";
+
+                    print(note+" at "+m_16thCount);
+
                     if (m_infoNotesComputedText) m_infoNotesComputedText.text += " " + l_playedKey.gameObject.name;
                 }
             }

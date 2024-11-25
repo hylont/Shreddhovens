@@ -34,6 +34,8 @@ public class AnimatedProjector : MonoBehaviour
     [SerializeField] bool m_canAnimate = false;
     [SerializeField] bool m_activateLightOnBegin = true;
 
+    [SerializeField] bool m_finiteRay = false;
+
     [Header("FLASH")]
     public float FlashInterval = .1f;
 
@@ -41,6 +43,11 @@ public class AnimatedProjector : MonoBehaviour
     [SerializeField] bool m_debug = false;
     private void Awake()
     {
+        if (!m_finiteRay)
+        {
+            m_lightOriginObject.transform.localScale = new(1, 1, 10);
+        }
+
         if (m_canAnimate)
         {
             if(TimeUntilBegin > 0f)
@@ -147,10 +154,12 @@ public class AnimatedProjector : MonoBehaviour
                 }
             }
         }
-        m_lightOriginObject.transform.localScale =
-                new(m_lightOriginObject.transform.localScale.x, m_lightOriginObject.transform.localScale.y,
-                Targets.Count > 0 ? Vector3.Distance(m_lightOriginObject.transform.position, Targets[m_targetIdx].transform.position)*.5f : 5);
-        
+        if (m_finiteRay)
+        {
+            m_lightOriginObject.transform.localScale =
+                    new(m_lightOriginObject.transform.localScale.x, m_lightOriginObject.transform.localScale.y,
+                    Targets.Count > 0 ? Vector3.Distance(m_lightOriginObject.transform.position, Targets[m_targetIdx].transform.position)*.5f : 5);
+        }        
     }
 
     public void StartAnimation(float p_targetChangeSpeed = 0, float p_destChangeSpeed = 0)
