@@ -109,6 +109,11 @@ public class ScoreLoader : MonoBehaviour
 
                 foreach (MeasureElement element in part.Measures[idxMeasure].MeasureElements)
                 {
+                    if(element.Element is Measure)
+                    {
+                        print("measure !");
+                    }
+
                     if (element.Type == MeasureElementType.Note)
                     {
                         if (element.Element is not Note l_note) continue;
@@ -135,7 +140,7 @@ public class ScoreLoader : MonoBehaviour
                                     m_allNotes.Add(idxToInsert, new() { l_noteStr });
                                 }
 
-                                print("[SCORE LOADER] Inserted " + l_noteStr + " at " + idxToInsert + " (voice "+l_note.Voice+")");
+                                //print("[SCORE LOADER] Inserted " + l_noteStr + " at " + idxToInsert + " (voice "+l_note.Voice+")");
 
                                 GameObject l_UINote = Instantiate(m_UINotePrefab, m_UINotesParent.transform);
                                 l_UINote.GetComponentInChildren<TextMeshProUGUI>().text = l_noteStr + "\n" + idxToInsert;
