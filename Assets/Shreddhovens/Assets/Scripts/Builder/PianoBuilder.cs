@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PianoBuilder : MonoBehaviour
 {
@@ -10,31 +12,13 @@ public class PianoBuilder : MonoBehaviour
     [SerializeField] float m_blackYOffset = .005f;
     [SerializeField] Transform m_keyOrigin;
 
+    [Header("Canvas")]
+    [SerializeField] UIKey m_originalUIKey;
+
     public Dictionary<string, PianoKey> m_allKeys { get; private set; } = new();
     // Start is called before the first frame update
     void Start()
     {
-        // NOPE TOO DIFFICULT, FILES WILL BE SET IN EDITOR
-        //string l_keysDirectory = Path.Combine(Application.streamingAssetsPath, "piano-mp3-master", "piano-mp3");
-        //if (Directory.Exists(l_keysDirectory))
-        //{
-        //    foreach(string l_filePath in Directory.GetFiles(l_keysDirectory))
-        //    {
-        //        if (l_filePath.EndsWith(".mp3"))
-        //        {
-        //            Debug.Log($"Found mp3 file : {l_filePath}");
-        //        }
-        //        else
-        //        {
-        //            Debug.LogError($"{l_filePath} is not a mp3 folder !");
-        //        }
-        //    }
-        //}
-        //else
-        //{
-        //    Debug.LogError("Key directory doesn't exist !");
-        //}
-
         if (m_pianoKeys.Count == 0) Debug.LogError("No audio clip !");
 
         CreateKeys();
@@ -106,9 +90,31 @@ public class PianoBuilder : MonoBehaviour
         }
 
         Vector3 l_offset = Vector3.zero;
+
+        int l_idxKeyUI = 0;
+        List<UIKey> l_UIKeys = new();
+        l_UIKeys.Add(m_originalUIKey);
+
         foreach (AudioClip l_clip in l_sortedAudioClips)
         {
             GameObject l_newKeyGO = Instantiate(l_clip.name.Contains('b') ? m_blackKeyPrefab : m_whiteKeyPrefab, m_keyOrigin);
+
+            if(l_idxKeyUI > 0)
+            {
+                GameObject l_newKeyUI = Instantiate(m_originalUIKey.gameObject, m_originalUIKey.transform.parent);
+                l_newKeyUI.transform.Translate(
+                    new(m_originalUIKey.GetComponent<RectTransform>().rect.width * l_idxKeyUI, 0));
+
+                l_newKeyUI.GetComponentInChildren<TextMeshProUGUI>().text = l_clip.name;
+                if (l_clip.name.Contains('b'))
+                {
+                    l_newKeyUI.GetComponent<Image>().color = Color.black;
+                    l_newKeyUI.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
+                }
+                l_newKeyUI.name = l_clip.name;
+                l_UIKeys.Add(l_newKeyUI.GetComponent<UIKey>());
+            }
+            l_idxKeyUI++;
 
             l_newKeyGO.name = l_clip.name;
 
@@ -129,7 +135,7 @@ public class PianoBuilder : MonoBehaviour
             }
         }
 
-        FindFirstObjectByType<ScoreLoader>().OnKeysReady();
+        FindFirstObjectByType<ScoreLoader>().OnKeysReady(l_UIKeys);
     }
 
     private static string KeyToText(char p_currentKey, int p_currentOctave, bool p_currentKeyIsBemol)

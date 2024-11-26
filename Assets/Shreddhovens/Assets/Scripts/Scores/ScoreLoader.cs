@@ -43,6 +43,10 @@ public class ScoreLoader : MonoBehaviour
     [SerializeField] [Range(0f, 1f)] float m_groupDeactivationChancesAtMeasure = .2f;
     List<ProjectorGroup> m_activatedGroups = new();
 
+    [Header("Canvases")]
+    [SerializeField] GameObject m_UINotePrefab;
+    [SerializeField] GameObject m_UINotesParent;
+
     [Header("Debug")]
     [SerializeField] TextMeshProUGUI m_infoLeftHandText;
     [SerializeField] TextMeshProUGUI m_infoRightHandText, m_infoNotesComputedText;
@@ -84,8 +88,10 @@ public class ScoreLoader : MonoBehaviour
         m_beatText.text = $"Beat {m_beatCount+1}";        
     }
 
-    public void OnKeysReady()
+    public void OnKeysReady(List<UIKey> p_UIKeys)
     {
+        List<UIKey> keys = FindObjectsOfType<UIKey>().ToList();
+
         var l_score = MusicXmlParser.GetScore(
             Path.Combine(Application.streamingAssetsPath, "Songs", m_songName+".xml"));
 
@@ -127,6 +133,22 @@ public class ScoreLoader : MonoBehaviour
                                 else
                                 {
                                     m_allNotes.Add(idxToInsert, new() { l_noteStr });
+                                }
+
+                                GameObject l_UINote = Instantiate(m_UINotePrefab, m_UINotesParent.transform);
+                                l_UINote.GetComponentInChildren<TextMeshProUGUI>().text = l_noteStr + "\n" + idxToInsert;
+                                l_UINote.name = l_noteStr + "_" + idxToInsert;
+
+                                UIKey l_UIKeyMatch = p_UIKeys.Find(k => k.name == l_noteStr);
+
+                                if(l_UIKeyMatch != null)
+                                {
+                                    l_UINote.transform.position = new(l_UIKeyMatch.transform.position.x, idxToInsert );
+                                    print("Set key " + l_UINote.name + "to " + l_UIKeyMatch.transform.position.x + " ; " + idxToInsert );
+                                }
+                                else
+                                {
+                                    Debug.LogError("Note " + l_noteStr + " has no corresponding UIKEY !");
                                 }
                             }
                             catch (Exception)
