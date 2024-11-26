@@ -1,3 +1,4 @@
+using Assets.Shreddhovens.Assets.Scripts.Builder;
 using MusicXml;
 using MusicXml.Domain;
 using System;
@@ -95,7 +96,8 @@ public class ScoreLoader : MonoBehaviour
         var l_score = MusicXmlParser.GetScore(
             Path.Combine(Application.streamingAssetsPath, "Songs", m_songName+".xml"));
 
-        m_nowPlaying.text = $"{m_songName} by {l_score.Identification.Composer}";
+        m_nowPlaying.text = $"NOW PLAYING : {m_songName} " +
+            $"{(string.IsNullOrEmpty(l_score.Identification.Composer) ? "" : l_score.Identification.Composer)}";
 
         m_bpmText.text = $"BPM : {m_bpm}";
 
@@ -103,8 +105,8 @@ public class ScoreLoader : MonoBehaviour
         {
             for (int idxMeasure = 0; idxMeasure < part.Measures.Count; idxMeasure++)
             {
-                int l_currentNote16th = 0;
-                //List<string> l_measureNotes = new();
+                Dictionary<int, int> l_noteIdxByVoice = new();
+
                 foreach (MeasureElement element in part.Measures[idxMeasure].MeasureElements)
                 {
                     if (element.Type == MeasureElementType.Note)
@@ -113,18 +115,16 @@ public class ScoreLoader : MonoBehaviour
 
                         if (!l_note.IsRest && l_note.Pitch != null)
                         {
-                            string l_noteStr = $"{l_note.Pitch.Step}{(l_note.Pitch.Alter == -1 ? "b" : "")}{l_note.Pitch.Octave}";
+                            if (!l_noteIdxByVoice.ContainsKey(l_note.Voice))
+                            {
+                                l_noteIdxByVoice.Add(l_note.Voice, 0);
+                            }
 
-                            //TODO is chord ?
-
-                            if (l_note.Type == "half") l_currentNote16th += 8;
-                            else if (l_note.Type == "quarter") l_currentNote16th += 4;
-                            else if (l_note.Type == "eighth") l_currentNote16th += 2;
-                            else if (l_note.Type == "16th") l_currentNote16th += 1;
+                            string l_noteStr = GetNoteStr(l_note);
 
                             try
                             {
-                                int idxToInsert = idxMeasure * 16 + l_currentNote16th;
+                                int idxToInsert = idxMeasure * 16 + l_noteIdxByVoice[l_note.Voice];
                                 //TODO add the elements to the existing list if it exists
                                 if (m_allNotes.ContainsKey(idxToInsert))
                                 {
@@ -135,25 +135,38 @@ public class ScoreLoader : MonoBehaviour
                                     m_allNotes.Add(idxToInsert, new() { l_noteStr });
                                 }
 
+                                print("[SCORE LOADER] Inserted " + l_noteStr + " at " + idxToInsert + " (voice "+l_note.Voice+")");
+
                                 GameObject l_UINote = Instantiate(m_UINotePrefab, m_UINotesParent.transform);
                                 l_UINote.GetComponentInChildren<TextMeshProUGUI>().text = l_noteStr + "\n" + idxToInsert;
                                 l_UINote.name = l_noteStr + "_" + idxToInsert;
 
                                 UIKey l_UIKeyMatch = p_UIKeys.Find(k => k.name == l_noteStr);
 
-                                if(l_UIKeyMatch != null)
+                                if (l_UIKeyMatch != null)
                                 {
-                                    l_UINote.transform.position = new(l_UIKeyMatch.transform.position.x, idxToInsert );
-                                    print("Set key " + l_UINote.name + "to " + l_UIKeyMatch.transform.position.x + " ; " + idxToInsert );
+                                    l_UINote.transform.localPosition = new((float)(l_UIKeyMatch.transform.localPosition.x + 0.05681825 * 0.5f), idxToInsert / 3.2f);
+
+                                    l_UINote.GetComponent<UINote>().KeyMatch = l_UIKeyMatch;
+
+                                    //print("Set key " + l_UINote.name + "to (" + l_UIKeyMatch.name + ") " + l_UIKeyMatch.transform.localPosition.x + " ; " + idxToInsert );
                                 }
                                 else
                                 {
                                     Debug.LogError("Note " + l_noteStr + " has no corresponding UIKEY !");
                                 }
+
+                                if (!l_note.IsChordTone)
+                                {
+                                    if (l_note.Type == "half") l_noteIdxByVoice[l_note.Voice] += 8;
+                                    else if (l_note.Type == "quarter") l_noteIdxByVoice[l_note.Voice] += 4;
+                                    else if (l_note.Type == "eighth") l_noteIdxByVoice[l_note.Voice] += 2;
+                                    else if (l_note.Type == "16th") l_noteIdxByVoice[l_note.Voice] += 1;
+                                }
                             }
                             catch (Exception)
                             {
-                                Debug.LogError($"Something went wrong when adding {l_noteStr[0]}(& more) at {idxMeasure * 16 + l_currentNote16th}");
+                                Debug.LogError($"Something went wrong when adding {l_noteStr[0]}(& more) at {idxMeasure * 16 + l_noteIdxByVoice[l_note.Voice]}");
                             }
                         }
 
@@ -162,13 +175,19 @@ public class ScoreLoader : MonoBehaviour
                     {
                         Backup l_backup = element.Element as Backup;
 
-                        l_currentNote16th-=l_backup.Duration;
+                        foreach(int l_voiceIdx in l_noteIdxByVoice.Keys.ToList())
+                        {
+                            l_noteIdxByVoice[l_voiceIdx] -= l_backup.Duration;
+                        }
                     }
                     else if (element.Type == MeasureElementType.Forward)
                     {
                         Forward l_forward = element.Element as Forward;
 
-                        l_currentNote16th += l_forward.Duration;
+                        foreach (int l_voiceIdx in l_noteIdxByVoice.Keys.ToList())
+                        {
+                            l_noteIdxByVoice[l_voiceIdx] -= l_forward.Duration;
+                        }
                     }                   
                 }
             }
@@ -183,6 +202,33 @@ public class ScoreLoader : MonoBehaviour
             l_group.TargetChangeSpeed = 60f / (m_bpm * (m_timeSignature / 2));
             l_group.FlashInterval = 60f / (m_bpm * m_timeSignature);
         }
+    }
+
+    private static string GetNoteStr(Note p_note)
+    {
+        Note l_noteCopy = p_note;
+        bool l_isBemol = false;
+
+        if(l_noteCopy.Pitch.Alter == 1)
+        {
+            if (l_noteCopy.Pitch.Step == 'G')
+            {
+                l_noteCopy.Pitch.Step = 'A';
+            }
+            else
+            {
+                l_noteCopy.Pitch.Step++;
+            }
+            l_isBemol = true;
+        }else if(l_noteCopy.Pitch.Alter == -1)
+        {
+            l_isBemol = true;
+        }
+
+        return $"" +
+            $"{l_noteCopy.Pitch.Step}" +
+            $"{(l_isBemol ? "b" : "")}" +
+            $"{l_noteCopy.Pitch.Octave}";
     }
 
     void Count16th()
@@ -319,6 +365,8 @@ public class ScoreLoader : MonoBehaviour
 
     void SetHandDestination(bool p_leftHand, ref List<Vector3> p_keysPositions, ref List<bool> p_fingersUsed)
     {
+        if (p_keysPositions.Count == 0) return;
+
         Vector3 l_averageKeyPos = new(
             p_keysPositions.Average(v => v.x),
             p_keysPositions.Average(v => v.y),
