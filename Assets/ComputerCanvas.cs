@@ -27,6 +27,8 @@ public class ComputerCanvas : MonoBehaviour
 
     [SerializeField] int m_linesPerPanel = 4;
 
+    [SerializeField] TravellingScenario m_scenario;
+
     int m_songsPanelIdx = -1;
     List<GameObject> m_songPanels = new();
 
@@ -37,6 +39,8 @@ public class ComputerCanvas : MonoBehaviour
 
     void Start()
     {
+        m_scenario.enabled = false;
+
         m_userText.text = $"Welcome back, " + Environment.UserName;
 
         m_beginButton.onClick.AddListener(OpenSongsList);
@@ -60,7 +64,6 @@ public class ComputerCanvas : MonoBehaviour
 
         foreach(string l_file in Directory.GetFiles(l_songsPath))
         {
-            print(l_file);
             if (l_file.EndsWith(".xml"))
             {
                 try
@@ -74,28 +77,25 @@ public class ComputerCanvas : MonoBehaviour
                         {
                             l_currentPanel = Instantiate(m_songPanelPrefab, m_songPanelOrigin.transform);
                             m_songPanels.Add(l_currentPanel);
-
-                            if(m_songsPanelIdx == -1)
-                            {
-                                RenderSongPanel(0);
-                            }
                         }
 
                         GameObject l_newLine = Instantiate(m_songLinePrefab, l_currentPanel.transform);
 
                         string l_songName = l_file.Split('\\')[l_file.Split('\\').Length -1];
 
-                        l_newLine.GetComponentsInChildren<TextMeshProUGUI>()[0].text = l_file;
+                        l_newLine.GetComponentsInChildren<TextMeshProUGUI>()[0].text = l_songName;
                         l_newLine.GetComponentsInChildren<TextMeshProUGUI>()[1].text = l_score.Identification.Composer;
 
                         l_newLine.GetComponent<Button>().onClick.AddListener(() =>
                         {
+                            m_scenario.enabled = true;
                             m_loader.StartScore(l_score,l_songName);
                             m_songPanelOrigin.SetActive(false);
                             m_alreadyPlayingPanel.SetActive(true);
                         });
 
-                        l_newLine.transform.Translate(new(0, -.05f * m_songs.Count, 0));
+                        l_newLine.transform.Translate(
+                            new(0, -.05f * m_songs.Count + ((m_songPanels.Count-1) * m_linesPerPanel * .05f), 0));
 
                         m_songs.Add((l_file, l_score.Identification.Composer));
                     }
@@ -107,11 +107,32 @@ public class ComputerCanvas : MonoBehaviour
                 }
             }
         }
+        if(m_songPanels.Count > 0)
+        {
+            RenderSongPanel(0);
+
+            m_previousButton.onClick.AddListener(() =>
+            {
+                RenderSongPanel(m_songsPanelIdx - 1);
+            });
+
+            m_nextButton.onClick.AddListener(() =>
+            {
+                RenderSongPanel(m_songsPanelIdx + 1);
+            });
+        }
     }
 
     void RenderSongPanel(int p_index)
     {
         m_songsPanelIdx = p_index;
+
+        foreach (GameObject l_panel in m_songPanels)
+        {
+            l_panel.SetActive(false);
+        }
+
+        m_songPanels[m_songsPanelIdx].SetActive(true);
 
         m_previousButton.gameObject.SetActive(m_songsPanelIdx > 0);
         m_nextButton.gameObject.SetActive(m_songsPanelIdx < m_songPanels.Count-2);

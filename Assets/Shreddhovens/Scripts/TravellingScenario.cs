@@ -19,7 +19,7 @@ public class TravellingScenario : MonoBehaviour
     [SerializeField] bool m_loopMode = false;
     private int _idxCamera;
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         ResetCameras();
 

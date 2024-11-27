@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Assets.Shreddhovens.Assets.Scripts.Builder
@@ -9,7 +10,7 @@ namespace Assets.Shreddhovens.Assets.Scripts.Builder
     public class UINote : MonoBehaviour
     {
         public int SixteenthPosition = 0;
-        public int BPM = 60;
+        public static int BPM = 60;
         public float Speed = .025f;
         public UIKey KeyMatch = null;
 
@@ -24,8 +25,12 @@ namespace Assets.Shreddhovens.Assets.Scripts.Builder
         [SerializeField] bool m_debugMode = false;
         [SerializeField] Image m_image;
 
+        static int NbNotesRemaining = 0;
+
         private void Start()
         {
+            NbNotesRemaining++;
+
             if (m_debugMode) return;
 
             m_startColorImage = m_image.color;
@@ -56,15 +61,35 @@ namespace Assets.Shreddhovens.Assets.Scripts.Builder
             }
 
 
-            if(transform.position.y < m_YAutoDestroy)
+            if(transform.position.y < m_YAutoDestroy && NbNotesRemaining > 0)
             {
                 if(KeyMatch != null)
                 {
                     KeyMatch.Play();
                 }
+                    
+                NbNotesRemaining--;
 
-                Destroy(gameObject);
+                if(NbNotesRemaining == 0)
+                {
+                    StartCoroutine(DelayRestart());
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
             }
+        }
+
+        IEnumerator DelayRestart()
+        {
+            yield return new WaitForSeconds(5);
+
+            SceneManager.LoadScene("StudioScene");
+
+            NbNotesRemaining = 0;
+
+            Destroy(gameObject);
         }
     }
 }

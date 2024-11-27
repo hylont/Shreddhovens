@@ -63,12 +63,19 @@ public class ScoreLoader : MonoBehaviour
 
     void PlayBeat()
     {
-        if (m_playMetronome) m_beatSource.Play();
+        if (m_playMetronome)
+        {
+            m_beatSource.volume = (m_beatCount +1) % m_timeSignature * .25f;
+            m_beatSource.Play();
+        }
         m_beatCount++;
         if(m_beatCount%m_timeSignature == 0)
         {
             m_beatCount = 0;
-            if(m_playMetronome) m_measureSource.Play();
+            if (m_playMetronome)
+            {
+                m_measureSource.Play();
+            }
             m_measureCount++;
             m_measureText.text = $"Measure : {m_measureCount}";
 
@@ -158,7 +165,7 @@ public class ScoreLoader : MonoBehaviour
                                 }
                                 else
                                 {
-                                    Debug.LogError("Note " + l_noteStr + " has no corresponding UIKEY !");
+                                    Debug.LogWarning("Note " + l_noteStr + " has no corresponding UIKEY !");
                                 }
 
                                 if (!l_note.IsChordTone)

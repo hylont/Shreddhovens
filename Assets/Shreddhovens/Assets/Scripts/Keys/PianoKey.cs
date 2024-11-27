@@ -15,6 +15,9 @@ public class PianoKey : MonoBehaviour, IComparable<PianoKey>
         AudioSource l_source = gameObject.AddComponent<AudioSource>();
         l_source.loop = false;
         l_source.volume = m_defaultVolume;
+        l_source.spatialBlend = 1;
+        l_source.minDistance = 4;
+        l_source.maxDistance = 15;
 
         GetComponent<Animator>().enabled = true;
     }

@@ -8,6 +8,7 @@ public class ProjectorGroup : MonoBehaviour
     AnimatedProjector[] m_projectors = null;
     [SerializeField] int m_projectorsToActivateAtEachStart = 1;
     [SerializeField] List<Material> m_emissiveMaterials = new();
+    [SerializeField] bool m_flashIntervalEqualsTargetChange = false;
 
     [SerializeField] bool m_debug = false;
 
@@ -24,6 +25,8 @@ public class ProjectorGroup : MonoBehaviour
     void Awake()
     {
         m_projectors = GetComponentsInChildren<AnimatedProjector>();
+
+        if (m_flashIntervalEqualsTargetChange) FlashInterval = TargetChangeSpeed;
 
         if (m_projectors == null) Debug.LogError("[PROJECTOR GROUP] No child projectors found !");
     }
@@ -46,7 +49,14 @@ public class ProjectorGroup : MonoBehaviour
             AnimatedProjector l_projector = m_projectors[l_idxProjector];
             l_projector.TimeUntilBegin = l_projectorSetCounter * ActivationDelay;
 
-            l_projector.FlashInterval = FlashInterval;
+            if (m_flashIntervalEqualsTargetChange)
+            {
+                l_projector.FlashInterval = TargetChangeSpeed;
+            }
+            else
+            {
+                l_projector.FlashInterval = FlashInterval;
+            }
 
             l_projector.SetMaterial(l_chosenMaterial);
 

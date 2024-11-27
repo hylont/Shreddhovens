@@ -35,6 +35,7 @@ public class AnimatedProjector : MonoBehaviour
     [SerializeField] bool m_activateLightOnBegin = true;
 
     [SerializeField] bool m_finiteRay = false;
+    [SerializeField] float m_rayLengthScale = 10;
 
     [Header("FLASH")]
     public float FlashInterval = .1f;
@@ -45,7 +46,7 @@ public class AnimatedProjector : MonoBehaviour
     {
         if (!m_finiteRay)
         {
-            m_lightOriginObject.transform.localScale = new(1, 1, 10);
+            m_lightOriginObject.transform.localScale = new(1, 1, m_rayLengthScale);
         }
 
         if (m_canAnimate)
