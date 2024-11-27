@@ -15,7 +15,6 @@ public class ScoreLoader : MonoBehaviour
     [SerializeField] AudioClip m_beatClip, m_measureClip;
     [SerializeField] AudioSource m_beatSource, m_measureSource;
     [SerializeField] TextMeshProUGUI m_bpmText, m_beatText, m_16thText, m_measureText, m_nowPlaying, m_notesPlayed;
-    [SerializeField] string m_songName = "helloworld";
     [SerializeField] bool m_playMetronome = true;
 
     public int m_bpm = 60;
@@ -54,6 +53,8 @@ public class ScoreLoader : MonoBehaviour
 
     Dictionary<int, List<string>> m_allNotes = new();
 
+    List<UIKey> m_UIKeys = new();
+
     private void Start()
     {
         m_beatSource.clip = m_beatClip;
@@ -69,7 +70,7 @@ public class ScoreLoader : MonoBehaviour
             m_beatCount = 0;
             if(m_playMetronome) m_measureSource.Play();
             m_measureCount++;
-            m_measureText.text = $"Measure {m_measureCount}";
+            m_measureText.text = $"Measure : {m_measureCount}";
 
             //activate groups randomly
             foreach (ProjectorGroup l_group in m_groups)
@@ -86,22 +87,21 @@ public class ScoreLoader : MonoBehaviour
             //int l_nbgroupsToActivate = UnityEngine.Random.Range(0, m_nbGroupsActivatedSimultaneously);
 
         }
-        m_beatText.text = $"Beat {m_beatCount+1}";        
+        m_beatText.text = $"Beat : {m_beatCount+1}";        
     }
 
-    public void OnKeysReady(List<UIKey> p_UIKeys)
+    public bool StartScore(Score p_score, string p_scoreName)
     {
+        if(m_UIKeys == null || m_UIKeys.Count == 0) return false;
+
         List<UIKey> keys = FindObjectsOfType<UIKey>().ToList();
 
-        var l_score = MusicXmlParser.GetScore(
-            Path.Combine(Application.streamingAssetsPath, "Songs", m_songName+".xml"));
-
-        m_nowPlaying.text = $"NOW PLAYING : {m_songName} " +
-            $"{(string.IsNullOrEmpty(l_score.Identification.Composer) ? "" : l_score.Identification.Composer)}";
+        m_nowPlaying.text = $"NOW PLAYING : {p_scoreName} " +
+            $"{(string.IsNullOrEmpty(p_score.Identification.Composer) ? "" : p_score.Identification.Composer)}";
 
         m_bpmText.text = $"BPM : {m_bpm}";
 
-        foreach (Part part in l_score.Parts)
+        foreach (Part part in p_score.Parts)
         {
             for (int idxMeasure = 0; idxMeasure < part.Measures.Count; idxMeasure++)
             {
@@ -109,7 +109,7 @@ public class ScoreLoader : MonoBehaviour
 
                 foreach (MeasureElement element in part.Measures[idxMeasure].MeasureElements)
                 {
-                    if(element.Element is Measure)
+                    if (element.Element is Measure)
                     {
                         print("measure !");
                     }
@@ -146,7 +146,7 @@ public class ScoreLoader : MonoBehaviour
                                 l_UINote.GetComponentInChildren<TextMeshProUGUI>().text = l_noteStr + "\n" + idxToInsert;
                                 l_UINote.name = l_noteStr + "_" + idxToInsert;
 
-                                UIKey l_UIKeyMatch = p_UIKeys.Find(k => k.name == l_noteStr);
+                                UIKey l_UIKeyMatch = m_UIKeys.Find(k => k.name == l_noteStr);
 
                                 if (l_UIKeyMatch != null)
                                 {
@@ -180,7 +180,7 @@ public class ScoreLoader : MonoBehaviour
                     {
                         Backup l_backup = element.Element as Backup;
 
-                        foreach(int l_voiceIdx in l_noteIdxByVoice.Keys.ToList())
+                        foreach (int l_voiceIdx in l_noteIdxByVoice.Keys.ToList())
                         {
                             l_noteIdxByVoice[l_voiceIdx] -= l_backup.Duration;
                         }
@@ -193,7 +193,7 @@ public class ScoreLoader : MonoBehaviour
                         {
                             l_noteIdxByVoice[l_voiceIdx] -= l_forward.Duration;
                         }
-                    }                   
+                    }
                 }
             }
         }
@@ -207,6 +207,13 @@ public class ScoreLoader : MonoBehaviour
             l_group.TargetChangeSpeed = 60f / (m_bpm * (m_timeSignature / 2));
             l_group.FlashInterval = 60f / (m_bpm * m_timeSignature);
         }
+
+        return true;
+    }
+
+    public void OnKeysReady(List<UIKey> p_UIKeys)
+    {
+        m_UIKeys = p_UIKeys;        
     }
 
     private static string GetNoteStr(Note p_note)
@@ -240,7 +247,7 @@ public class ScoreLoader : MonoBehaviour
     {
         if (m_allNotes.ContainsKey(m_16thCount) && m_allNotes[m_16thCount] != null)
         {
-            m_notesPlayed.text = "Notes Played" + Environment.NewLine;
+            m_notesPlayed.text = "Notes Played :" + Environment.NewLine;
 
             List<PianoKey> l_playedKeys = new();
 
@@ -254,7 +261,7 @@ public class ScoreLoader : MonoBehaviour
 
                     m_notesPlayed.text += note + " ";
 
-                    print(note+" at "+m_16thCount);
+                    //print(note+" at "+m_16thCount);
 
                     if (m_infoNotesComputedText) m_infoNotesComputedText.text += " " + l_playedKey.gameObject.name;
                 }
@@ -332,7 +339,7 @@ public class ScoreLoader : MonoBehaviour
                     else
                     {
                         //if the offset is too high, switch to right hand
-                        Debug.Log("[SCORE HANDS] Exceeded hand span of left hand.");
+                        //Debug.Log("[SCORE HANDS] Exceeded hand span of left hand.");
                         l_needsTwoHands = true;
                         l_firstHandKey = Vector3.zero;
 
@@ -365,7 +372,7 @@ public class ScoreLoader : MonoBehaviour
         }
         m_16thCount++;
 
-        m_16thText.text = $"16th {m_16thCount}";
+        m_16thText.text = $"16th : {m_16thCount}";
     }
 
     void SetHandDestination(bool p_leftHand, ref List<Vector3> p_keysPositions, ref List<bool> p_fingersUsed)
