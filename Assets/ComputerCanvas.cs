@@ -1,5 +1,6 @@
 using MusicXml;
 using MusicXml.Domain;
+using SFB;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,10 +25,15 @@ public class ComputerCanvas : MonoBehaviour
     [SerializeField] Button m_previousButton;
     [SerializeField] Button m_nextButton;
     [SerializeField] Button m_errorButton;
+    [SerializeField] Button m_uploadButton;
 
     [SerializeField] int m_linesPerPanel = 4;
 
     [SerializeField] TravellingScenario m_scenario;
+
+    [SerializeField] Renderer m_windowRenderer;
+    Color m_baseWindowColor;
+    bool m_windowIsFading = false;
 
     int m_songsPanelIdx = -1;
     List<GameObject> m_songPanels = new();
@@ -45,16 +51,49 @@ public class ComputerCanvas : MonoBehaviour
 
         m_beginButton.onClick.AddListener(OpenSongsList);
 
+        m_baseWindowColor = m_windowRenderer.material.color;
+
+        m_windowRenderer.material.color = new(m_baseWindowColor.r, m_baseWindowColor.g, m_baseWindowColor.b, .98f);
+
+        m_errorButton.onClick.AddListener(() =>
+        {
+            m_errorPanel.SetActive(false);
+            m_welcomePanel.SetActive(true);
+            m_errorButton.gameObject.SetActive(false);
+        });
+
         m_welcomePanel.SetActive(true);
         m_songPanelOrigin.SetActive(false);
         m_alreadyPlayingPanel.SetActive(false) ;
         m_errorPanel.SetActive(false);
+        m_uploadButton.gameObject.SetActive(false);
         m_previousButton.gameObject.SetActive(false);
         m_nextButton.gameObject.SetActive(false);
     }
 
+    private void Update()
+    {
+        if(m_windowIsFading)
+        {
+            Color l_actualColor = m_windowRenderer.material.color;
+            if(l_actualColor.a < .15f) m_windowIsFading = false;
+
+            m_windowRenderer.material.color =
+                new(m_baseWindowColor.r, m_baseWindowColor.g, m_baseWindowColor.b, 
+                Mathf.Lerp(l_actualColor.a, .1f, UnityEngine.Time.deltaTime*.1f));
+        }
+    }
+
     private void OpenSongsList()
     {
+        foreach(GameObject l_panel in m_songPanels)
+        {
+            Destroy(l_panel);
+        }
+        m_songPanels.Clear();
+
+        m_songs.Clear();
+
         m_welcomePanel.SetActive(false);
         m_songPanelOrigin.SetActive(true);
 
@@ -89,6 +128,7 @@ public class ComputerCanvas : MonoBehaviour
                         l_newLine.GetComponent<Button>().onClick.AddListener(() =>
                         {
                             m_scenario.enabled = true;
+                            m_windowIsFading = true;
                             m_loader.StartScore(l_score,l_songName);
                             m_songPanelOrigin.SetActive(false);
                             m_alreadyPlayingPanel.SetActive(true);
@@ -104,10 +144,16 @@ public class ComputerCanvas : MonoBehaviour
                 {
                     m_errorPanel.SetActive(true);
                     m_errorText.text = $"File {l_file} could is impossible to read :\n"+e.Message;
+                    m_errorButton.gameObject.SetActive(true);
                 }
             }
         }
-        if(m_songPanels.Count > 0)
+
+        m_uploadButton.gameObject.SetActive(true);
+
+        m_uploadButton.onClick.AddListener(TryAddNewSong);
+
+        if (m_songPanels.Count > 0)
         {
             RenderSongPanel(0);
 
@@ -120,6 +166,37 @@ public class ComputerCanvas : MonoBehaviour
             {
                 RenderSongPanel(m_songsPanelIdx + 1);
             });
+        }
+    }
+
+    void TryAddNewSong()
+    {
+        string[] l_files = StandaloneFileBrowser.OpenFilePanel("Choose one or more songs", "", "xml", true);
+        if(l_files.Length > 0)
+        {
+            foreach(string l_file in l_files)
+            {
+                string l_songName = l_file.Split('\\')[l_file.Split('\\').Length - 1];
+                try
+                {
+                    string l_dest = Path.Combine(Application.streamingAssetsPath, "Songs", l_songName);
+                    File.Copy(l_file, l_dest);
+            
+                    print("Successfuly copied "+l_file+" to "+l_dest);
+                    
+                    OpenSongsList();
+                }catch(Exception _)
+                {
+
+                }
+            }
+
+        }
+        else
+        {
+            m_errorPanel.SetActive(true);
+            m_errorText.text = "You have selected no song";
+            m_errorButton.gameObject.SetActive(true);
         }
     }
 
