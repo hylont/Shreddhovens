@@ -47,6 +47,9 @@ public class ScoreLoader : MonoBehaviour
 
     [Header("Effects")]
     [SerializeField] BlendShapeMorpher m_timpaniMorpher;
+    [SerializeField] List<ParticleSystem> m_flameThrowers = new();
+    [SerializeField] int m_minNotesFlamethrowers = 7;
+    int m_lastFlamethrowerMeasureIdx = 0;
 
     [Header("Canvases")]
     [SerializeField] GameObject m_UINotePrefab;
@@ -386,7 +389,16 @@ public class ScoreLoader : MonoBehaviour
                     }
                 }
 
-
+                //flamethrowers
+                if(l_playedKeys.Count >= UnityEngine.Random.Range(m_minNotesFlamethrowers, 11) && m_lastFlamethrowerMeasureIdx + 1 < m_measureCount)
+                {
+                    m_lastFlamethrowerMeasureIdx = m_measureCount;
+                    foreach(ParticleSystem p_flames in m_flameThrowers) 
+                    {
+                        p_flames.Play();
+                        p_flames.gameObject.GetComponentInChildren<AudioSource>().Play();
+                    }
+                }
 
                 if(l_currentHandKeys.Count > 0)
                 {

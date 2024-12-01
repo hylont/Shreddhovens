@@ -5,7 +5,10 @@ using UnityEngine;
 
 public enum EAnimation
 {
-    ROTATION_TO_POINT, FLASH, LERP}
+    ROTATION_TO_POINT, FLASH, LERP
+}
+
+[RequireComponent(typeof(AudioSource))]
 
 public class AnimatedProjector : MonoBehaviour
 {
@@ -68,6 +71,10 @@ public class AnimatedProjector : MonoBehaviour
     public void SetMaterial(Material material)
     {
         m_lightObject.GetComponent<Renderer>().material = material;
+        if (m_lightObject.GetComponentInChildren<Light>())
+        {
+            m_lightObject.GetComponentInChildren<Light>().color = material.GetColor("_EmissiveColor");
+        }
         m_lightObject.GetComponent<Renderer>().material.SetFloat("_EmissiveIntensity", 
             LightIntensity + UnityEngine.Random.Range(LightIntensity * -.1f, LightIntensity *.1f));
     }
@@ -170,6 +177,8 @@ public class AnimatedProjector : MonoBehaviour
         //Light
         m_lightObject.SetActive(true);
 
+        GetComponent<AudioSource>().Play();
+
         if (m_debug) print("[PROJECTOR] " + name + " activated !");
         m_canAnimate = true;
     }
@@ -188,6 +197,8 @@ public class AnimatedProjector : MonoBehaviour
     internal void StopAnimation()
     {
         m_canAnimate = false;
+
+        GetComponent<AudioSource>().Stop();
 
         m_lightObject.SetActive(false);
     }

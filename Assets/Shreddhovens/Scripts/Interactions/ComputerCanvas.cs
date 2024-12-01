@@ -12,26 +12,34 @@ using UnityEngine.UI;
 
 public class ComputerCanvas : MonoBehaviour
 {
+    [Header("Loader")]
     [SerializeField] ScoreLoader m_loader;
 
+    [Header("Child UI panels")]
     [SerializeField] GameObject m_welcomePanel;
     [SerializeField] GameObject m_errorPanel;
     [SerializeField] GameObject m_alreadyPlayingPanel;
     [SerializeField] GameObject m_songPanelOrigin;
     [SerializeField] GameObject m_songPanelPrefab;
     [SerializeField] GameObject m_songLinePrefab;
+    [SerializeField] int m_linesPerPanel = 4;
 
+    [Header("Child UI buttons")]
     [SerializeField] Button m_beginButton;
     [SerializeField] Button m_previousButton;
     [SerializeField] Button m_nextButton;
     [SerializeField] Button m_errorButton;
     [SerializeField] Button m_uploadButton;
+    
+    [Header("Child UI texts")]
+    [SerializeField] TextMeshProUGUI m_userText;
+    [SerializeField] TextMeshProUGUI m_errorText;
 
-    [SerializeField] int m_linesPerPanel = 4;
-
+    [Header("Song start listeners")]
+    [SerializeField] List<GameObject> m_spotsStartup;
     [SerializeField] TravellingScenario m_scenario;
-
     [SerializeField] Renderer m_windowRenderer;
+
     Color m_baseWindowColor;
     bool m_windowIsFading = false;
 
@@ -40,8 +48,6 @@ public class ComputerCanvas : MonoBehaviour
 
     List<(string, string)> m_songs = new();
 
-    [SerializeField] TextMeshProUGUI m_userText;
-    [SerializeField] TextMeshProUGUI m_errorText;
 
     void Start()
     {
@@ -69,6 +75,14 @@ public class ComputerCanvas : MonoBehaviour
         m_uploadButton.gameObject.SetActive(false);
         m_previousButton.gameObject.SetActive(false);
         m_nextButton.gameObject.SetActive(false);
+
+        foreach(GameObject l_spot in m_spotsStartup)
+        {
+            foreach(Light l_light in l_spot.GetComponentsInChildren<Light>())
+            {
+                l_light.enabled = false;
+            }
+        }
     }
 
     private void Update()
@@ -132,6 +146,7 @@ public class ComputerCanvas : MonoBehaviour
                             m_loader.StartScore(l_score,l_songName);
                             m_songPanelOrigin.SetActive(false);
                             m_alreadyPlayingPanel.SetActive(true);
+                            StartCoroutine(StartLightsCoroutine());
                         });
 
                         l_newLine.transform.Translate(
@@ -166,6 +181,19 @@ public class ComputerCanvas : MonoBehaviour
             {
                 RenderSongPanel(m_songsPanelIdx + 1);
             });
+        }
+    }
+
+    private IEnumerator StartLightsCoroutine()
+    {
+        foreach (GameObject l_spot in m_spotsStartup)
+        {
+            foreach (Light l_light in l_spot.GetComponentsInChildren<Light>())
+            {
+                l_light.enabled = true;
+            }
+            l_spot.GetComponentInChildren<AudioSource>().Play();
+            yield return new WaitForSeconds(0.625f * 4); // one measure at 96 BPM, ugly af but no time !
         }
     }
 
@@ -212,6 +240,6 @@ public class ComputerCanvas : MonoBehaviour
         m_songPanels[m_songsPanelIdx].SetActive(true);
 
         m_previousButton.gameObject.SetActive(m_songsPanelIdx > 0);
-        m_nextButton.gameObject.SetActive(m_songsPanelIdx < m_songPanels.Count-2);
+        m_nextButton.gameObject.SetActive(m_songsPanelIdx < m_songPanels.Count-1);
     }
 }
