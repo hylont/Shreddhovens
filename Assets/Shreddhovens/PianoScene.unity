@@ -1118,6 +1118,81 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1001 &579610765
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1259601526}
+    m_Modifications:
+    - target: {fileID: 8946718077869854891, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946718077869854891, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946718077869854891, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946718077869854891, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.70710784
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946718077869854891, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.70710576
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946718077869854891, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946718077869854891, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946718077869854891, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946718077869854891, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946718077869854891, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8952193331068405191, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8952214759271923929, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+      propertyPath: m_Name
+      value: FlameThrowerWindow
+      objectReference: {fileID: 0}
+    - target: {fileID: 8952214759271923929, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+--- !u!4 &579610766 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8946718077869854891, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+  m_PrefabInstance: {fileID: 579610765}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &579610767 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 9149305760942684827, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+  m_PrefabInstance: {fileID: 579610765}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &704876871
 GameObject:
   m_ObjectHideFlags: 0
@@ -1346,86 +1421,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 202649552}
     m_Modifications:
-    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: FlashInterval
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: RotationSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Animations.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.data[0]
-      value: 
-      objectReference: {fileID: 284841857}
-    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.data[1]
-      value: 
-      objectReference: {fileID: 1868065889}
-    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.data[2]
-      value: 
-      objectReference: {fileID: 1080740955}
-    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.data[3]
-      value: 
-      objectReference: {fileID: 1763470901}
-    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: m_activateLightOnBegin
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Animations.Array.data[1]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: FlashInterval
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: RotationSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Animations.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.data[0]
-      value: 
-      objectReference: {fileID: 284841857}
-    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.data[1]
-      value: 
-      objectReference: {fileID: 1868065889}
-    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.data[2]
-      value: 
-      objectReference: {fileID: 1080740955}
-    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.data[3]
-      value: 
-      objectReference: {fileID: 1763470901}
-    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: m_activateLightOnBegin
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Animations.Array.data[1]
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 134209196163469689, guid: 6510c3afc0c11f745bc7646a11c8835d, type: 3}
       propertyPath: m_Name
       value: P_BeamBlockSmallWindows2
@@ -1545,6 +1540,86 @@ PrefabInstance:
     - target: {fileID: 7773623995387247199, guid: 6510c3afc0c11f745bc7646a11c8835d, type: 3}
       propertyPath: m_activateLightOnBegin
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: FlashInterval
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: RotationSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Animations.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.data[0]
+      value: 
+      objectReference: {fileID: 284841857}
+    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.data[1]
+      value: 
+      objectReference: {fileID: 1868065889}
+    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.data[2]
+      value: 
+      objectReference: {fileID: 1080740955}
+    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.data[3]
+      value: 
+      objectReference: {fileID: 1763470901}
+    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: m_activateLightOnBegin
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Animations.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: FlashInterval
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: RotationSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Animations.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.data[0]
+      value: 
+      objectReference: {fileID: 284841857}
+    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.data[1]
+      value: 
+      objectReference: {fileID: 1868065889}
+    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.data[2]
+      value: 
+      objectReference: {fileID: 1080740955}
+    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.data[3]
+      value: 
+      objectReference: {fileID: 1763470901}
+    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: m_activateLightOnBegin
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Animations.Array.data[1]
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2912,6 +2987,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_pivotSpeed: 45
   m_axis: {x: 0, y: 1, z: 0}
+--- !u!1 &1259601525
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1259601526}
+  m_Layer: 0
+  m_Name: ------------ Flames
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1259601526
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1259601525}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.8, y: 0.22, z: -2.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1732415502}
+  - {fileID: 579610766}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1372523026
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2920,118 +3028,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 202649552}
     m_Modifications:
-    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: FlashInterval
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: RotationSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Animations.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.data[0]
-      value: 
-      objectReference: {fileID: 1963085068}
-    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.data[1]
-      value: 
-      objectReference: {fileID: 868438792}
-    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.data[2]
-      value: 
-      objectReference: {fileID: 1490396523}
-    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.data[3]
-      value: 
-      objectReference: {fileID: 188469213}
-    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.data[4]
-      value: 
-      objectReference: {fileID: 2041824431}
-    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.data[5]
-      value: 
-      objectReference: {fileID: 507426936}
-    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.data[6]
-      value: 
-      objectReference: {fileID: 1020128776}
-    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.data[7]
-      value: 
-      objectReference: {fileID: 730545707}
-    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: m_activateLightOnBegin
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Animations.Array.data[1]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: FlashInterval
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: RotationSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Animations.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.data[0]
-      value: 
-      objectReference: {fileID: 730545707}
-    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.data[1]
-      value: 
-      objectReference: {fileID: 1963085068}
-    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.data[2]
-      value: 
-      objectReference: {fileID: 868438792}
-    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.data[3]
-      value: 
-      objectReference: {fileID: 1490396523}
-    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.data[4]
-      value: 
-      objectReference: {fileID: 188469213}
-    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.data[5]
-      value: 
-      objectReference: {fileID: 2041824431}
-    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.data[6]
-      value: 
-      objectReference: {fileID: 507426936}
-    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Targets.Array.data[7]
-      value: 
-      objectReference: {fileID: 1020128776}
-    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: m_activateLightOnBegin
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
-      propertyPath: Animations.Array.data[1]
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 134209196163469689, guid: 6510c3afc0c11f745bc7646a11c8835d, type: 3}
       propertyPath: m_Name
       value: P_BeamBlockPartialWindow
@@ -3197,6 +3193,118 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7773623995387247199, guid: 6510c3afc0c11f745bc7646a11c8835d, type: 3}
+      propertyPath: Animations.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: FlashInterval
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: RotationSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Animations.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.data[0]
+      value: 
+      objectReference: {fileID: 1963085068}
+    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.data[1]
+      value: 
+      objectReference: {fileID: 868438792}
+    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.data[2]
+      value: 
+      objectReference: {fileID: 1490396523}
+    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.data[3]
+      value: 
+      objectReference: {fileID: 188469213}
+    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.data[4]
+      value: 
+      objectReference: {fileID: 2041824431}
+    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.data[5]
+      value: 
+      objectReference: {fileID: 507426936}
+    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.data[6]
+      value: 
+      objectReference: {fileID: 1020128776}
+    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.data[7]
+      value: 
+      objectReference: {fileID: 730545707}
+    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: m_activateLightOnBegin
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955285762873977517, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Animations.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: FlashInterval
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: RotationSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Animations.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.data[0]
+      value: 
+      objectReference: {fileID: 730545707}
+    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.data[1]
+      value: 
+      objectReference: {fileID: 1963085068}
+    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.data[2]
+      value: 
+      objectReference: {fileID: 868438792}
+    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.data[3]
+      value: 
+      objectReference: {fileID: 1490396523}
+    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.data[4]
+      value: 
+      objectReference: {fileID: 188469213}
+    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.data[5]
+      value: 
+      objectReference: {fileID: 2041824431}
+    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.data[6]
+      value: 
+      objectReference: {fileID: 507426936}
+    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: Targets.Array.data[7]
+      value: 
+      objectReference: {fileID: 1020128776}
+    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: m_activateLightOnBegin
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
       propertyPath: Animations.Array.data[1]
       value: 1
       objectReference: {fileID: 0}
@@ -3371,6 +3479,10 @@ MonoBehaviour:
   - {fileID: 2068320787}
   - {fileID: 750409710}
   m_projectorActiveTime: 1
+  m_flames:
+  - {fileID: 1732415503}
+  - {fileID: 579610767}
+  m_flameActivationChance: 0.01
 --- !u!4 &1425070632
 Transform:
   m_ObjectHideFlags: 0
@@ -4131,6 +4243,81 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1001 &1732415501
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1259601526}
+    m_Modifications:
+    - target: {fileID: 8946718077869854891, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946718077869854891, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.019999996
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946718077869854891, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946718077869854891, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.70710784
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946718077869854891, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.70710576
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946718077869854891, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946718077869854891, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946718077869854891, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946718077869854891, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946718077869854891, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8952193331068405191, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8952214759271923929, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+      propertyPath: m_Name
+      value: FlameThrowerDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 9149445101417173639, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+--- !u!4 &1732415502 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8946718077869854891, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+  m_PrefabInstance: {fileID: 1732415501}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &1732415503 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 9149305760942684827, guid: b0177cefdcad8dd418220d8c90aef713, type: 3}
+  m_PrefabInstance: {fileID: 1732415501}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1763470900
 GameObject:
   m_ObjectHideFlags: 0
@@ -5693,3 +5880,4 @@ SceneRoots:
   - {fileID: 867418337}
   - {fileID: 1465431120}
   - {fileID: 993788432}
+  - {fileID: 1259601526}

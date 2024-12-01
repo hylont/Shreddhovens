@@ -103,6 +103,8 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value:
     - {fileID: 11400000, guid: 7ce67bdb2cfa3f445ba6ded49707bc1c, type: 2}
+    - {fileID: 11400000, guid: 13713b45b71602b4aa14178bc2aaf1c4, type: 2}
+    - {fileID: 11400000, guid: da8c49ed7c914a14a9030580f704c8db, type: 2}
 --- !u!114 &-1016694868962581565
 MonoBehaviour:
   m_ObjectHideFlags: 3

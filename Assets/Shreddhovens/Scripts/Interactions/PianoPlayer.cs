@@ -10,6 +10,9 @@ public class PianoPlayer : MonoBehaviour
     [SerializeField] List<AnimatedProjector> m_projectors = new();
     [SerializeField] float m_projectorActiveTime = 1f;
 
+    [SerializeField] List<ParticleSystem> m_flames = new();
+    [SerializeField] float m_flameActivationChance = .05f;
+
     List<PianoKey> m_playedKeys = new();
 
     void Update()
@@ -23,6 +26,17 @@ public class PianoPlayer : MonoBehaviour
                 if (l_key && !m_playedKeys.Contains(l_key))
                 {
                     l_key.Play();
+
+                    if(Random.Range(0, 1f) < m_flameActivationChance)
+                    {
+                        foreach(ParticleSystem l_flameThrower in m_flames)
+                        {
+                            l_flameThrower.Play();
+                            l_flameThrower.GetComponentInChildren<ParticleSystem>().Play();
+                            l_flameThrower.GetComponent<AudioSource>().Play();
+                        }
+                    }
+
                     StartCoroutine(FreeKey(l_key));
                     StartCoroutine(LightUpProjector(m_projectors[Random.Range(0, m_projectors.Count)]));
                 }

@@ -39,6 +39,7 @@ public class ComputerCanvas : MonoBehaviour
     [SerializeField] List<GameObject> m_spotsStartup;
     [SerializeField] TravellingScenario m_scenario;
     [SerializeField] Renderer m_windowRenderer;
+    Color m_baseSpotEmissive;
 
     Color m_baseWindowColor;
     bool m_windowIsFading = false;
@@ -76,13 +77,19 @@ public class ComputerCanvas : MonoBehaviour
         m_previousButton.gameObject.SetActive(false);
         m_nextButton.gameObject.SetActive(false);
 
-        foreach(GameObject l_spot in m_spotsStartup)
+        if(m_spotsStartup.Count > 0)
         {
-            foreach(Light l_light in l_spot.GetComponentsInChildren<Light>())
+            m_baseSpotEmissive = m_spotsStartup[0].GetComponent<Renderer>().material.GetColor("_EmissiveColor");
+
+            foreach (GameObject l_spot in m_spotsStartup)
             {
-                l_light.enabled = false;
+                l_spot.GetComponent<Renderer>().material.SetColor("_EmissiveColor", Color.black);
+                foreach (Light l_light in l_spot.GetComponentsInChildren<Light>())
+                {
+                    l_light.enabled = false;
+                }
             }
-        }
+        }        
     }
 
     private void Update()
@@ -188,10 +195,13 @@ public class ComputerCanvas : MonoBehaviour
     {
         foreach (GameObject l_spot in m_spotsStartup)
         {
+            l_spot.GetComponent<Renderer>().material.SetColor("_EmissiveColor", m_baseWindowColor);
+            
             foreach (Light l_light in l_spot.GetComponentsInChildren<Light>())
             {
                 l_light.enabled = true;
             }
+
             l_spot.GetComponentInChildren<AudioSource>().Play();
             yield return new WaitForSeconds(0.625f * 4); // one measure at 96 BPM, ugly af but no time !
         }

@@ -396,6 +396,7 @@ public class ScoreLoader : MonoBehaviour
                     foreach(ParticleSystem p_flames in m_flameThrowers) 
                     {
                         p_flames.Play();
+                        p_flames.GetComponentInChildren<ParticleSystem>().Play();
                         p_flames.gameObject.GetComponentInChildren<AudioSource>().Play();
                     }
                 }
@@ -418,7 +419,7 @@ public class ScoreLoader : MonoBehaviour
 
                     for (int l_idxFinger = 0; l_idxFinger < m_rightHandFingerTargets.Count; l_idxFinger++)
                     {
-                        m_rightHandFingerTargets[l_idxFinger].SetDestination(m_rightHandRestPosition.transform.position + m_handsFingersOffsetPosition);
+                        m_rightHandFingerTargets[l_idxFinger].SetDestination(m_rightHandRestPosition.transform.position - m_handsFingersOffsetPosition);
                         m_rightHandFingerTargets[l_idxFinger].transform.rotation = Quaternion.Euler(m_handsFingersOffsetRotationRight);
                     }                    
                 }

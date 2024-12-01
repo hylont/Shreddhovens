@@ -284,6 +284,14 @@ PrefabInstance:
       propertyPath: MoveDestinations.Array.data[1]
       value: 
       objectReference: {fileID: 7994458780390728602}
+    - target: {fileID: 6427401786843539367, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: m_Intensity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6509494728952225533, guid: a968ffa5880790849a4490695224b68a, type: 3}
+      propertyPath: m_Intensity
+      value: 0.3628437
+      objectReference: {fileID: 0}
     - target: {fileID: 6725048386748890934, guid: a968ffa5880790849a4490695224b68a, type: 3}
       propertyPath: FlashInterval
       value: 0.25
