@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class PianoKey : MonoBehaviour, IComparable<PianoKey>
 {
-    [SerializeField] float m_defaultVolume = .6f;
+    [SerializeField] float m_defaultVolume = .8f;
     float m_duration;
     Coroutine m_releaseCoroutine;
     [SerializeField] bool m_logEnabled = false;
@@ -17,7 +17,7 @@ public class PianoKey : MonoBehaviour, IComparable<PianoKey>
         l_source.volume = m_defaultVolume;
         l_source.spatialBlend = 1;
         l_source.minDistance = 4;
-        l_source.maxDistance = 15;
+        l_source.maxDistance = 18;
 
         GetComponent<Animator>().enabled = true;
     }
